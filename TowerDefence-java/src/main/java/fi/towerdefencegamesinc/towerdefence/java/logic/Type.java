@@ -9,6 +9,6 @@ package fi.towerdefencegamesinc.towerdefence.java.logic;
  *
  * @author vrsaari
  */
-class Type {
-    
+enum Type {
+    Road, Buildable, Unbuildable, Spawn
 }

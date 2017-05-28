@@ -47,4 +47,28 @@ public class PlayerTest {
         Player player = new Player("Uolevi");
         assertEquals("Uolevi", player.getName());
     }
+
+    /**
+     * Test of getName method, of class Player.
+     */
+    @Test
+    public void testGetName() {
+        System.out.println("getName");
+        Player instance = new Player("Uolevi");
+        String expResult = "Uolevi";
+        String result = instance.getName();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setName method, of class Player.
+     */
+    @Test
+    public void testSetName() {
+        System.out.println("setName");
+        String name = "Test";
+        Player instance = new Player("Pertti");
+        instance.setName(name);
+        assertEquals(name, instance.getName());
+    }
 }

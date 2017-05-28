@@ -9,6 +9,21 @@ package fi.towerdefencegamesinc.towerdefence.java.logic;
  *
  * @author vrsaari
  */
-class Tile {
+public class Tile {
+    
+    private Type type;
+    private Tower tower;
+    private final boolean buildable;
+
+    /**
+     *
+     * @param type
+     * @param buildable
+     */
+    public Tile(Type type, boolean buildable) {
+        this.type = type;
+        this.buildable = buildable;
+    }
+    
     
 }

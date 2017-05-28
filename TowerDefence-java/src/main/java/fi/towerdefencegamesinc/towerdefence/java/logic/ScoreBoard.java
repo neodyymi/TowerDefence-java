@@ -21,10 +21,19 @@ public class ScoreBoard {
         this.scores = new PriorityQueue<>(10, Collections.reverseOrder());
     }
 
+    /**
+     *
+     * @param n
+     * @return
+     */
     public List<Score> getScores(int n) {
         return scores.stream().limit(n).collect(Collectors.toList());
     }
     
+    /**
+     *
+     * @return
+     */
     public List<Score> getScores() {
         return getScores(10);
     }

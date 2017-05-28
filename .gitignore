@@ -51,3 +51,4 @@ nbdist/
 
 .idea/
 *.iml
+/TowerDefence-java/nbproject/

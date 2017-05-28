@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fi.towerdefencegamesinc.towerdefence.java.logic;
+package fi.towerdefencegamesinc.towerdefence.java.gui;
 
 /**
  *
  * @author vrsaari
  */
-public interface Tower {    
+public class ViewTest {
     
-    int shoot();
-    int upgrade();
-    int getUpgradeCost();
-    int getLevel();
-    boolean readyToShoot();
 }
