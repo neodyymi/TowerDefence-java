@@ -18,3 +18,7 @@ Pelistä kiinostunut pelaaja ja harjoitustyön tarkastava henkilö.
     * Aallon käynnistäminen tauon jälkeen
 * Parhaiden pisteiden listauksen katsominen
 * **EHKÄ** Kenttäeditori / Aaltoeditor
+
+
+#### Luokkakaavio:
+![](luokkakaavio.png)
