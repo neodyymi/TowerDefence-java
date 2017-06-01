@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fi.towerdefencegamesinc.towerdefence.java.logic.towers;
-
-import fi.towerdefencegamesinc.towerdefence.java.logic.Tower;
+package fi.towerdefencegamesinc.towerdefence.java.logic.tower;
 
 /**
  *
  * @author vrsaari
  */
-public class BasicTower implements Tower{
-    
+public class BasicTower implements Tower {
+
     private int level;
     private int power;
     private int speed;
@@ -22,7 +20,7 @@ public class BasicTower implements Tower{
     public BasicTower() {
         this.level = 0;
         this.lastShot = 0;
-        this.upgradeCost = new int[]{1,2,3,4,5};
+        this.upgradeCost = new int[]{1, 2, 3, 4, 5};
     }
 
     @Override
@@ -50,6 +48,10 @@ public class BasicTower implements Tower{
     public boolean readyToShoot() {
         return true;
     }
-    
-    
+
+    @Override
+    public char getCharRepr() {
+        return 'B';
+    }
+
 }

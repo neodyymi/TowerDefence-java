@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
  * @author vrsaari
  */
 public class ScoreBoard {
+
     PriorityQueue<Score> scores;
 
     public ScoreBoard() {
@@ -29,7 +30,7 @@ public class ScoreBoard {
     public List<Score> getScores(int n) {
         return scores.stream().limit(n).collect(Collectors.toList());
     }
-    
+
     /**
      *
      * @return
@@ -37,7 +38,5 @@ public class ScoreBoard {
     public List<Score> getScores() {
         return getScores(10);
     }
-    
-    
-    
+
 }

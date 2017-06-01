@@ -5,14 +5,14 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java.logic;
 
-import java.time.DateTimeException;
 import java.util.Date;
 
 /**
  *
  * @author vrsaari
  */
-public class Score implements Comparable{
+public class Score implements Comparable {
+
     private final Long score;
     private final Date date;
     private final Player player;
@@ -45,6 +45,5 @@ public class Score implements Comparable{
         Score other = (Score) o;
         return this.score.compareTo(other.score);
     }
-    
-    
+
 }

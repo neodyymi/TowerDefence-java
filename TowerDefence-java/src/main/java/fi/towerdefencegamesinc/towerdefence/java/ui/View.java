@@ -10,5 +10,5 @@ package fi.towerdefencegamesinc.towerdefence.java.ui;
  * @author vrsaari
  */
 public class View {
-    
+
 }

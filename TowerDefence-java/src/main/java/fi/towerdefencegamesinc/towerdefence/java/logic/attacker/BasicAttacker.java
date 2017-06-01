@@ -3,44 +3,56 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fi.towerdefencegamesinc.towerdefence.java.logic.tower;
+package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
+
+import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.Modifier;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author vrsaari
  */
-public class FreezeTower implements Tower {
+public class BasicAttacker implements Attacker {
 
-    public FreezeTower() {
+    private int speed;
+    private int damage;
+    private List<Modifier> modifiers;
+
+    public BasicAttacker(int speed, int damage) {
+        this.speed = speed;
+        this.damage = damage;
+
+        this.modifiers = new ArrayList();
     }
 
     @Override
-    public int shoot() {
+    public void move() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int upgrade() {
+    public int attack() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int getUpgradeCost() {
+    public boolean canFly() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int getLevel() {
+    public void addModifier(Modifier mod) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean readyToShoot() {
+    public void updateModifiers() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public char getCharRepr() {
+    public void getSpeed() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

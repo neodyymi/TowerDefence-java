@@ -9,6 +9,21 @@ package fi.towerdefencegamesinc.towerdefence.java.logic;
  *
  * @author vrsaari
  */
-enum Type {
-    Road, Buildable, Unbuildable, Spawn
+public enum Type {
+    Road(' '),
+    Buildable('@'),
+    Unbuildable('#'),
+    Spawn('X');
+
+    private final char representation;
+
+    private Type(char t) {
+        representation = t;
+    }
+
+    @Override
+    public String toString() {
+        return "" + representation;
+    }
+
 }

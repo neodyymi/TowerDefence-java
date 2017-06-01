@@ -10,9 +10,9 @@ package fi.towerdefencegamesinc.towerdefence.java.logic;
  * @author vrsaari
  */
 public class Player {
-    
+
     private String name;
-    
+
     public Player(String name) {
         this.name = name;
     }
@@ -24,6 +24,5 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
-    
-    
+
 }
