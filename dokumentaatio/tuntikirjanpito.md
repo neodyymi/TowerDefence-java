@@ -5,4 +5,4 @@ Päivä | Tunnit | Kuvaus
 19.05.2017 | 1h | Aiheen kuvauksen kirjoittaminen.
 22.-28.05.2017| 6h | Uutta koodia ja testiväkertelyä. Luokkakaavion tekeminen.
 29.05.2017 | 2h | Dokumentaatiota ja joitain korjauksia.
-01.06.2017 | 5h | Koodia ja testejä. Luokkakaavio kuntoon ja dokumentaatiot ajantasalle.
+01.06.2017 | 6h | Koodia ja testejä. Luokkakaavio kuntoon ja dokumentaatiot ajantasalle.
