@@ -5,6 +5,12 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java.logic;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Stream;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -29,7 +35,7 @@ public class MapTest {
 
     @Before
     public void setUp() throws Exception {
-        
+
     }
 
     @After
@@ -61,5 +67,38 @@ public class MapTest {
         Tile result = instance.getTile(x, y);
         assertEquals(expResult, result);
     }
-    
+
+    /**
+     * Test of reading a file into a map
+     */
+    @Test
+    public void testReadMapFromFile() {
+        char[][] tmpTiles = {
+            {'X', ' ', ' ', '#'},
+            {'#', '@', ' ', '@'},
+            {'#', '@', ' ', '@'},
+            {'#', '@', ' ', '#'}
+        };
+
+        File tmpF;
+        StringBuilder sb = new StringBuilder();
+        Stream.of(tmpTiles).forEach(chars -> {
+            sb.append(new String(chars));
+            sb.append("\n");
+        });
+
+        try {
+            tmpF = File.createTempFile("test", "file");
+            try (FileWriter fw = new FileWriter(tmpF)) {
+                fw.append(sb);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(MapTest.class.getName()).log(Level.SEVERE, null, ex);
+            fail("Failed to create temporary file for test");
+            return;
+        }
+        Map testMap = Map.loadMapFromFile(tmpF.getPath());
+        tmpF.deleteOnExit();
+        assertEquals(testMap.toString(), sb.toString());
+    }
 }
