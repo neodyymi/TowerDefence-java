@@ -12,7 +12,9 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
- * The map is used to track objects in game and locations available for building.
+ * The map is used to track objects in game and locations available for
+ * building.
+ *
  * @author vrsaari
  */
 public class Map {
@@ -22,7 +24,7 @@ public class Map {
 
     /**
      * Create a new Map object with given width and height.
-     * 
+     *
      * @param width The width of the map in tiles.
      * @param height The height of the map in tiles.
      */
@@ -33,7 +35,7 @@ public class Map {
 
     /**
      * Create a new map object with fixed width and height.
-     * 
+     *
      */
     public Map() {
         this(10, 10);
@@ -41,7 +43,7 @@ public class Map {
 
     /**
      * Read information from a file to generate a map.
-     * 
+     *
      * @param fileName File to read map information from.
      * @return Generated map object.
      */
@@ -60,6 +62,7 @@ public class Map {
 
     /**
      * Mostly a assisting method for generating a map from a file.
+     *
      * @param tmpTiles 2d char-array used to generate a map from.
      * @return Generated map object.
      */

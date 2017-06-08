@@ -9,6 +9,7 @@ import java.util.Date;
 
 /**
  * A score object with information related to a single score.
+ *
  * @author vrsaari
  */
 public class Score implements Comparable {
@@ -19,6 +20,7 @@ public class Score implements Comparable {
 
     /**
      * Create a score object. It uses the current time as a timestamp for it.
+     *
      * @param name Name of the player performing the score.
      * @param score The score to be recorded.
      */

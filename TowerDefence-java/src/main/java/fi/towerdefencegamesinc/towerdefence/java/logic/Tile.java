@@ -9,6 +9,7 @@ import fi.towerdefencegamesinc.towerdefence.java.logic.tower.Tower;
 
 /**
  * Tiles are the buildingblocks of the maps.
+ *
  * @author vrsaari
  */
 public class Tile {
@@ -19,6 +20,7 @@ public class Tile {
 
     /**
      * Create a tile object.
+     *
      * @param type Type of the tile.
      * @param buildable Is the player allowed to build on the tile?
      */
@@ -42,6 +44,7 @@ public class Tile {
 
     /**
      * Attempt to add a tower on the tile.
+     *
      * @param tower The tower to be added to the tile.
      * @return Was the tower added successfully?
      */

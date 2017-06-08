@@ -7,6 +7,7 @@ package fi.towerdefencegamesinc.towerdefence.java.logic;
 
 /**
  * Enumerator for different types of tiles available.
+ *
  * @author vrsaari
  */
 public enum Type {

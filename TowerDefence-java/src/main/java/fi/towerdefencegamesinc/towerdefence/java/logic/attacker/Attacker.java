@@ -6,9 +6,11 @@
 package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
 
 import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.Modifier;
+import java.util.List;
 
 /**
  * Interface for all types of attackers trying to destroy the player.
+ *
  * @author vrsaari
  */
 public interface Attacker {
@@ -20,21 +22,31 @@ public interface Attacker {
 
     /**
      * Attack as designed to.
+     *
      * @return Amount of damage dealt.
      */
     public int attack();
 
     /**
      * Can this attacker fly?
+     *
      * @return Can this attacker fly?
      */
     public boolean canFly();
 
     /**
      * Add a modifier to the attacker.
+     *
      * @param mod Modifier to be added.
      */
     public void addModifier(Modifier mod);
+
+    /**
+     * Get all modifiers modifying the attacker.
+     *
+     * @return List of modifiers.
+     */
+    public List<Modifier> getModifiers();
 
     /**
      * Make the modifiers tick forward in effect and duration.
@@ -43,6 +55,7 @@ public interface Attacker {
 
     /**
      * How fast the attacker is.
+     *
      * @return The speed of the attacker.
      */
     public int getSpeed();

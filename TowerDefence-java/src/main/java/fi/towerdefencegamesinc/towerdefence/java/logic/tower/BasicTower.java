@@ -22,6 +22,7 @@ public class BasicTower implements Tower {
 
     /**
      * Create a basic tower with given parameters.
+     *
      * @param power The power of the tower.
      * @param speed The firingspeed of the tower.
      * @param upgradeCost Array of costs to upgrade the tower.
@@ -43,6 +44,7 @@ public class BasicTower implements Tower {
 
     @Override
     public int shoot() {
+        this.lastShot = new Date().getTime();
         return 1 * power;
     }
 
@@ -64,12 +66,17 @@ public class BasicTower implements Tower {
 
     @Override
     public boolean readyToShoot() {
-        return this.lastShot - new Date().getTime() < this.speed;
+        return new Date().getTime() - this.lastShot > this.speed;
     }
 
     @Override
     public char getCharRepr() {
         return 'B';
+    }
+
+    @Override
+    public long getLastShot() {
+        return lastShot;
     }
 
 }

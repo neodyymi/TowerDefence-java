@@ -7,12 +7,14 @@ package fi.towerdefencegamesinc.towerdefence.java.logic.tower;
 
 /**
  * A tower with capability to freeze or slow enemies.
+ *
  * @author vrsaari
  */
 public class FreezeTower extends BasicTower {
 
     /**
      * Create a freeze tower with the given parameters.
+     *
      * @param power The power of the tower.
      * @param speed The firingspeed of the tower.
      * @param upgradeCost Array of costs to upgrade the tower.
@@ -20,7 +22,7 @@ public class FreezeTower extends BasicTower {
     public FreezeTower(int power, int speed, int[] upgradeCost) {
         super(power, speed, upgradeCost);
     }
-    
+
     /**
      * Create a freeze tower with set parameters.
      */
@@ -30,7 +32,7 @@ public class FreezeTower extends BasicTower {
 
     @Override
     public int shoot() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return super.shoot();
     }
 
     @Override

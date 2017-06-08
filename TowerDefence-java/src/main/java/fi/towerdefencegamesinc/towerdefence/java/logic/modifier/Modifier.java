@@ -10,6 +10,7 @@ import java.util.Date;
 
 /**
  * A time limited modifier for a target. It can modify any stats on the target.
+ *
  * @author vrsaari
  */
 public class Modifier {
@@ -19,6 +20,7 @@ public class Modifier {
 
     /**
      * Creates a new modifier.
+     *
      * @param duration The duration of the modifier in milliseconds.
      */
     public Modifier(Long duration) {
@@ -49,9 +51,10 @@ public class Modifier {
     public void setDuration(Long duration) {
         this.duration = duration;
     }
-    
+
     /**
      * Update stats of the attacker the modifier is attached to.
+     *
      * @param attacker
      */
     public void update(Attacker attacker) {

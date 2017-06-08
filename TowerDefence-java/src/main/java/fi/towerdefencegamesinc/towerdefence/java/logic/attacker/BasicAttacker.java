@@ -6,12 +6,15 @@
 package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
 
 import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.Modifier;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
- * A basic type of attacker which serves as both a basic minion and 
- * a buildingblock for other types of attackers.
+ * A basic type of attacker which serves as both a basic minion and a
+ * buildingblock for other types of attackers.
+ *
  * @author vrsaari
  */
 public class BasicAttacker implements Attacker {
@@ -23,6 +26,7 @@ public class BasicAttacker implements Attacker {
 
     /**
      * Creates an attacker.
+     *
      * @param speed The base speed for the attacker.
      * @param damage The base damage for the attacker.
      * @param flying Does the attacker fly?
@@ -34,9 +38,10 @@ public class BasicAttacker implements Attacker {
 
         this.modifiers = new HashSet();
     }
-    
+
     /**
      * Simplified constructor for a non-flying attacker.
+     *
      * @param speed The base speed for the attacker.
      * @param damage The base damage for the attacker.
      */
@@ -62,6 +67,11 @@ public class BasicAttacker implements Attacker {
     @Override
     public void addModifier(Modifier mod) {
         this.modifiers.add(mod);
+    }
+
+    @Override
+    public List<Modifier> getModifiers() {
+        return new ArrayList(this.modifiers);
     }
 
     @Override

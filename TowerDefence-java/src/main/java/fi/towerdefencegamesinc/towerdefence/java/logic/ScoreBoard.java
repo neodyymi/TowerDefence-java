@@ -11,8 +11,9 @@ import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
 /**
- * Scoreboards keep a number of scores together. It's related to a map and
- * that is the common relation between the scores.
+ * Scoreboards keep a number of scores together. It's related to a map and that
+ * is the common relation between the scores.
+ *
  * @author vrsaari
  */
 public class ScoreBoard {
@@ -29,6 +30,7 @@ public class ScoreBoard {
 
     /**
      * Retrieve a number of scores from the scoreboard. Ordered by score.
+     *
      * @param n Number of scores to be returned.
      * @return A list of scores.
      */
@@ -38,6 +40,7 @@ public class ScoreBoard {
 
     /**
      * Retrieve the top 10 scores from the scoreboard.
+     *
      * @return A list of scores.
      */
     public List<Score> getScores() {

@@ -7,12 +7,14 @@ package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
 
 /**
  * A template for a special kind of attacker. A stronger single unit attacking.
+ *
  * @author vrsaari
  */
 public class BossAttacker extends BasicAttacker {
 
     /**
      * Creates a boss attacker.
+     *
      * @param speed The base speed of the boss attacker.
      * @param damage The base damage of the boss attacker.
      */
