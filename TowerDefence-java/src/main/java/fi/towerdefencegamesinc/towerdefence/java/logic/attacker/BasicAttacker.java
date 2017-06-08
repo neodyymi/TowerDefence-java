@@ -6,24 +6,42 @@
 package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
 
 import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.Modifier;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- *
+ * A basic type of attacker which serves as both a basic minion and 
+ * a buildingblock for other types of attackers.
  * @author vrsaari
  */
 public class BasicAttacker implements Attacker {
 
     private int speed;
     private int damage;
-    private List<Modifier> modifiers;
+    private Set<Modifier> modifiers;
+    private boolean flying;
 
-    public BasicAttacker(int speed, int damage) {
+    /**
+     * Creates an attacker.
+     * @param speed The base speed for the attacker.
+     * @param damage The base damage for the attacker.
+     * @param flying Does the attacker fly?
+     */
+    public BasicAttacker(int speed, int damage, boolean flying) {
         this.speed = speed;
         this.damage = damage;
+        this.flying = flying;
 
-        this.modifiers = new ArrayList();
+        this.modifiers = new HashSet();
+    }
+    
+    /**
+     * Simplified constructor for a non-flying attacker.
+     * @param speed The base speed for the attacker.
+     * @param damage The base damage for the attacker.
+     */
+    public BasicAttacker(int speed, int damage) {
+        this(speed, damage, false);
     }
 
     @Override
@@ -33,27 +51,27 @@ public class BasicAttacker implements Attacker {
 
     @Override
     public int attack() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.damage;
     }
 
     @Override
     public boolean canFly() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.flying;
     }
 
     @Override
     public void addModifier(Modifier mod) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.modifiers.add(mod);
     }
 
     @Override
     public void updateModifiers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.modifiers.forEach(m -> m.update(this));
     }
 
     @Override
-    public void getSpeed() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int getSpeed() {
+        return this.speed;
     }
 
 }

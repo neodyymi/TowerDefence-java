@@ -5,7 +5,10 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java.logic.tower;
 
+import java.util.Date;
+
 /**
+ * A basic type of tower.
  *
  * @author vrsaari
  */
@@ -14,18 +17,33 @@ public class BasicTower implements Tower {
     private int level;
     private int power;
     private int speed;
-    private int lastShot;
+    private long lastShot;
     private int[] upgradeCost;
 
-    public BasicTower() {
+    /**
+     * Create a basic tower with given parameters.
+     * @param power The power of the tower.
+     * @param speed The firingspeed of the tower.
+     * @param upgradeCost Array of costs to upgrade the tower.
+     */
+    public BasicTower(int power, int speed, int[] upgradeCost) {
+        this.power = power;
+        this.speed = speed;
         this.level = 0;
         this.lastShot = 0;
-        this.upgradeCost = new int[]{1, 2, 3, 4, 5};
+        this.upgradeCost = upgradeCost;
+    }
+
+    /**
+     * Create a basic tower.
+     */
+    public BasicTower() {
+        this(1, 1000, new int[]{1, 2, 3, 4, 5});
     }
 
     @Override
     public int shoot() {
-        return 1;
+        return 1 * power;
     }
 
     @Override
@@ -46,7 +64,7 @@ public class BasicTower implements Tower {
 
     @Override
     public boolean readyToShoot() {
-        return true;
+        return this.lastShot - new Date().getTime() < this.speed;
     }
 
     @Override

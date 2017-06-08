@@ -8,20 +8,42 @@ package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
 import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.Modifier;
 
 /**
- *
+ * Interface for all types of attackers trying to destroy the player.
  * @author vrsaari
  */
 public interface Attacker {
 
+    /**
+     * Move the attacker as it is designed to.
+     */
     public void move();
 
+    /**
+     * Attack as designed to.
+     * @return Amount of damage dealt.
+     */
     public int attack();
 
+    /**
+     * Can this attacker fly?
+     * @return Can this attacker fly?
+     */
     public boolean canFly();
 
+    /**
+     * Add a modifier to the attacker.
+     * @param mod Modifier to be added.
+     */
     public void addModifier(Modifier mod);
 
+    /**
+     * Make the modifiers tick forward in effect and duration.
+     */
     public void updateModifiers();
 
-    public void getSpeed();
+    /**
+     * How fast the attacker is.
+     * @return The speed of the attacker.
+     */
+    public int getSpeed();
 }

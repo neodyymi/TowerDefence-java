@@ -6,13 +6,17 @@
 package fi.towerdefencegamesinc.towerdefence.java.logic;
 
 /**
- *
+ * The player-class keeps information on a player.
  * @author vrsaari
  */
 public class Player {
 
     private String name;
 
+    /**
+     * Create a player object.
+     * @param name The name of the player.
+     */
     public Player(String name) {
         this.name = name;
     }

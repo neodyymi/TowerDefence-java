@@ -8,7 +8,7 @@ package fi.towerdefencegamesinc.towerdefence.java.logic;
 import fi.towerdefencegamesinc.towerdefence.java.logic.tower.Tower;
 
 /**
- *
+ * Tiles are the buildingblocks of the maps.
  * @author vrsaari
  */
 public class Tile {
@@ -18,9 +18,9 @@ public class Tile {
     private final boolean buildable;
 
     /**
-     *
-     * @param type
-     * @param buildable
+     * Create a tile object.
+     * @param type Type of the tile.
+     * @param buildable Is the player allowed to build on the tile?
      */
     public Tile(Type type, boolean buildable) {
         this.type = type;
@@ -40,6 +40,11 @@ public class Tile {
         return buildable;
     }
 
+    /**
+     * Attempt to add a tower on the tile.
+     * @param tower The tower to be added to the tile.
+     * @return Was the tower added successfully?
+     */
     public boolean addTower(Tower tower) {
         if (this.tower == null && this.buildable) {
             this.tower = tower;
