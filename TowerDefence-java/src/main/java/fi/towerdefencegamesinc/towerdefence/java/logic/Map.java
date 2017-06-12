@@ -8,6 +8,9 @@ package fi.towerdefencegamesinc.towerdefence.java.logic;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -19,8 +22,9 @@ import java.util.stream.Stream;
  */
 public class Map {
 
-    Tile[][] tiles;
-    ScoreBoard scoreBoard;
+    private Tile[][] tiles;
+    private ScoreBoard scoreBoard;
+    private List<Tile> spawns;
 
     /**
      * Create a new Map object with given width and height.
@@ -30,6 +34,7 @@ public class Map {
      */
     public Map(int width, int height) {
         this.tiles = new Tile[width][height];
+        this.spawns = new ArrayList();
         this.scoreBoard = new ScoreBoard();
     }
 
@@ -74,16 +79,16 @@ public class Map {
             IntStream.range(0, width).forEach(j -> {
                 switch (tmpTiles[i][j]) {
                     case ' ':
-                        map.tiles[i][j] = new Tile(Type.Road, false);
+                        map.tiles[i][j] = new Tile(j, i, Type.Road, false);
                         break;
                     case '#':
-                        map.tiles[i][j] = new Tile(Type.Unbuildable, false);
+                        map.tiles[i][j] = new Tile(j, i, Type.Unbuildable, false);
                         break;
                     case '@':
-                        map.tiles[i][j] = new Tile(Type.Buildable, true);
+                        map.tiles[i][j] = new Tile(j, i, Type.Buildable, true);
                         break;
                     case 'X':
-                        map.tiles[i][j] = new Tile(Type.Spawn, false);
+                        map.tiles[i][j] = new Tile(j, i, Type.Spawn, false);
                         break;
                     default:
                         break;
@@ -91,6 +96,22 @@ public class Map {
 
             });
         });
+        IntStream.range(0, height).forEach(i -> {
+            IntStream.range(0, width).forEach(j -> {
+                if (i > 0) {
+                    map.tiles[i][j].setNorth(map.tiles[i - 1][j]);
+                }
+                if (i < map.tiles.length - 1) {
+                    map.tiles[i][j].setSouth(map.tiles[i + 1][j]);
+                }
+                if (j > 0) {
+                    map.tiles[i][j].setEast(map.tiles[i][j + 1]);
+                }
+                if (i < map.tiles[i].length - 1) {
+                    map.tiles[i][j].setWest(map.tiles[i][j - 1]);
+                }
+            });
+        }); 
         return map;
     }
 
@@ -163,5 +184,8 @@ public class Map {
     public Tile[][] getTiles() {
         return tiles;
     }
-
+    
+    public Tile getRandomSpawn() {
+        return this.spawns.get(new Random().nextInt(this.spawns.size()));
+    }
 }

@@ -5,6 +5,7 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
 
+import fi.towerdefencegamesinc.towerdefence.java.logic.Location;
 import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.Modifier;
 import java.util.ArrayList;
 import java.util.HashSet;
