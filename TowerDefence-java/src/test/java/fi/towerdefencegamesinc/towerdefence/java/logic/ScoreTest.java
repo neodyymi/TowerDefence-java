@@ -21,6 +21,7 @@ import static org.junit.Assert.*;
 public class ScoreTest {
 
     private Score score;
+    private Player player;
 
     public ScoreTest() {
     }
@@ -35,7 +36,8 @@ public class ScoreTest {
 
     @Before
     public void setUp() {
-        this.score = new Score("Pekka", 2);
+        this.player = new Player("Pekka", 1000);
+        this.score = new Score(this.player, 2);
     }
 
     @After
@@ -96,7 +98,7 @@ public class ScoreTest {
     @Test
     public void testCompareToEqual() {
         System.out.println("compareTo");
-        Score other = new Score("Pekka", 2);
+        Score other = new Score(this.player, 2);
         int expResult = 0;
         int result = score.compareTo(other);
         assertEquals(expResult, result);
@@ -108,7 +110,7 @@ public class ScoreTest {
     @Test
     public void testCompareToBetter() {
         System.out.println("compareTo");
-        Score other = new Score("Pekka", 4);
+        Score other = new Score(this.player, 4);
         int result = score.compareTo(other);
         assertTrue(result < 0);
     }
@@ -119,7 +121,7 @@ public class ScoreTest {
     @Test
     public void testCompareToLesser() {
         System.out.println("compareTo");
-        Score other = new Score("Pekka", 0);
+        Score other = new Score(this.player, 0);
         int result = score.compareTo(other);
         assertTrue(result > 0);
     }

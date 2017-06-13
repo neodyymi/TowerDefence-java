@@ -14,18 +14,18 @@ import java.util.Date;
  */
 public class Score implements Comparable {
 
-    private final Long score;
+    private final int score;
     private final Date date;
     private final Player player;
 
     /**
      * Create a score object. It uses the current time as a timestamp for it.
      *
-     * @param name Name of the player performing the score.
+     * @param player The player performing the score.
      * @param score The score to be recorded.
      */
-    public Score(String name, long score) {
-        this.player = new Player(name);
+    public Score(Player player, int score) {
+        this.player = player;
         this.score = score;
         this.date = new Date();
     }
@@ -43,14 +43,14 @@ public class Score implements Comparable {
         return player;
     }
 
-    public long getScore() {
+    public int getScore() {
         return score;
     }
 
     @Override
     public int compareTo(Object o) {
         Score other = (Score) o;
-        return this.score.compareTo(other.score);
+        return this.score - other.score;
     }
 
 }

@@ -5,6 +5,8 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
 
+import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
+import fi.towerdefencegamesinc.towerdefence.java.logic.Type;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -39,7 +41,8 @@ public class FlyingAttackerTest {
 
     @Test
     public void testCreateFlyingAttacker() {
-        Attacker flyingAttacker = new FlyingAttacker(1, 1);
+        Tile tile = new Tile(0, 0, Type.Spawn, false);
+        Attacker flyingAttacker = new FlyingAttacker(tile, 1, 1);
         assertEquals(1, flyingAttacker.getSpeed());
         assertEquals(true, flyingAttacker.canFly());
         assertEquals(1, flyingAttacker.attack());

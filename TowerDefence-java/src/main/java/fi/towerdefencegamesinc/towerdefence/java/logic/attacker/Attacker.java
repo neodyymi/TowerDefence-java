@@ -5,6 +5,7 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
 
+import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
 import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.Modifier;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public interface Attacker {
 
     /**
      * Move the attacker as it is designed to.
+     * @param start The tile the movement starts in.
      */
     public void move();
 
@@ -59,4 +61,15 @@ public interface Attacker {
      * @return The speed of the attacker.
      */
     public int getSpeed();
+
+    @Override
+    public String toString();
+    
+    /**
+     *
+     * @return The tile the attacker is currently located in.
+     */
+    public Tile getTile();
+    
+    
 }

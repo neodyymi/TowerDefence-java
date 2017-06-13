@@ -5,6 +5,10 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java.logic.tower;
 
+import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
+import fi.towerdefencegamesinc.towerdefence.java.logic.attacker.Attacker;
+import java.util.List;
+
 /**
  * Interface for all towers to be placed by the player.
  *
@@ -15,9 +19,10 @@ public interface Tower {
     /**
      * Attempt to shoot.
      *
+     * @param attacker Attacker to be shot.
      * @return Damage to be dealt.
      */
-    int shoot();
+    int shoot(Attacker attacker);
 
     /**
      * Upgrade the tower level.
@@ -58,4 +63,28 @@ public interface Tower {
      * @return Time of last shot fired.
      */
     public long getLastShot();
+    
+    /**
+     * Get target for tower. This will return the previous target, 
+     * if it is still in range. Otherwise nearest new target in range is returned.
+     * In case no target is in range, null is returned.
+     * @param attackers List of all attackers in game.
+     * @return Target for tower or null if none in range.
+     */
+    public Attacker getTarget(List<Attacker> attackers);
+    
+    /**
+     *
+     * @return Tile the tower is located in.
+     */
+    public Tile getTile();
+
+    /**
+     *
+     * @return Attack range of the tower.
+     */
+    public double getRange();
+
+    public void setTile(Tile tile);
+
 }

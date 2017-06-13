@@ -13,19 +13,24 @@ import java.util.Date;
  *
  * @author vrsaari
  */
-public class Modifier {
+public abstract class Modifier {
 
     private Date startTime;
     private Long duration;
+    private String name;
+    private int strength;
 
     /**
      * Creates a new modifier.
      *
      * @param duration The duration of the modifier in milliseconds.
+     * @param name
+     * @param strength
      */
-    public Modifier(Long duration) {
+    public Modifier(Long duration, String name, int strength) {
         this.startTime = new Date();
         this.duration = duration;
+        this.strength = strength;
     }
 
     /**
@@ -61,4 +66,22 @@ public class Modifier {
         // Do somethign to the attacker.
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getName() {
+        return this.name;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    @Override
+    public abstract String toString();
 }

@@ -36,8 +36,8 @@ public class TileTest {
 
     @Before
     public void setUp() {
-        buildable = new Tile(Type.Buildable, true);
-        unbuildable = new Tile(Type.Unbuildable, false);
+        buildable = new Tile(1, 1, Type.Buildable, true);
+        unbuildable = new Tile(0, 0, Type.Unbuildable, false);
     }
 
     @After

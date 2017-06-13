@@ -5,6 +5,10 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java.logic.tower;
 
+import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
+import fi.towerdefencegamesinc.towerdefence.java.logic.Type;
+import fi.towerdefencegamesinc.towerdefence.java.logic.attacker.Attacker;
+import fi.towerdefencegamesinc.towerdefence.java.logic.attacker.BasicAttacker;
 import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,6 +23,8 @@ import static org.junit.Assert.*;
  */
 public class BasicTowerTest {
     private Tower basicTower;
+    private Tile tile;
+    private BasicAttacker attacker;
     
     public BasicTowerTest() {
     }
@@ -33,7 +39,9 @@ public class BasicTowerTest {
     
     @Before
     public void setUp() {
-        this.basicTower = new BasicTower(1, 10000, new int[]{1, 2, 3, 4, 5});
+        this.tile = new Tile(0, 0, Type.Spawn, false);
+        this.attacker = new BasicAttacker(this.tile, 1, 1);
+        this.basicTower = new BasicTower(this.tile, 1, 10000, 3, new int[]{1, 2, 3, 4, 5});
     }
     
     @After
@@ -45,7 +53,7 @@ public class BasicTowerTest {
      */
     @Test
     public void testShoot() {
-        assertEquals(1, this.basicTower.shoot());
+        assertEquals(1, this.basicTower.shoot(this.attacker));
     }
 
     /**
@@ -90,7 +98,7 @@ public class BasicTowerTest {
     @Test
     public void testReadyToShoot() {
         assertTrue(this.basicTower.readyToShoot());
-        this.basicTower.shoot();
+        this.basicTower.shoot(this.attacker);
         System.out.println("Last shot: " + this.basicTower.getLastShot());
         System.out.println("Current time in ms: " + new Date().getTime());
         assertFalse(this.basicTower.readyToShoot());

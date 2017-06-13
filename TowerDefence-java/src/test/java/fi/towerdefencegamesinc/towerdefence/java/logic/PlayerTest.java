@@ -44,7 +44,7 @@ public class PlayerTest {
     // public void hello() {}
     @Test
     public void playerIsCreated() {
-        Player player = new Player("Uolevi");
+        Player player = new Player("Uolevi", 1000);
         assertEquals("Uolevi", player.getName());
     }
 
@@ -54,7 +54,7 @@ public class PlayerTest {
     @Test
     public void testGetName() {
         System.out.println("getName");
-        Player instance = new Player("Uolevi");
+        Player instance = new Player("Uolevi", 1000);
         String expResult = "Uolevi";
         String result = instance.getName();
         assertEquals(expResult, result);
@@ -67,7 +67,7 @@ public class PlayerTest {
     public void testSetName() {
         System.out.println("setName");
         String name = "Test";
-        Player instance = new Player("Pertti");
+        Player instance = new Player("Pertti", 1000);
         instance.setName(name);
         assertEquals(name, instance.getName());
     }

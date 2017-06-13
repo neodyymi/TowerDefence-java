@@ -8,6 +8,7 @@ package fi.towerdefencegamesinc.towerdefence.java.logic;
 import fi.towerdefencegamesinc.towerdefence.java.logic.attacker.Attacker;
 import fi.towerdefencegamesinc.towerdefence.java.logic.tower.Tower;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -119,7 +120,7 @@ public class Tile {
             return false;
         }
     }
-    
+
     public boolean addAttacker(Attacker attacker) {
         if (this.isSpawn()) {
             this.attackers.add(attacker);
@@ -128,6 +129,37 @@ public class Tile {
             return false;
         }
     }
+    
+    public void removeAttacker(Attacker attacker) {
+        this.attackers.remove(attacker);
+    }
+
+    public List<Attacker> getAttackers() {
+        return attackers;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.type.toString());
+        sb.append(" ");
+        sb.append(this.location);
+        sb.append(" ");
+        if (buildable) {
+            sb.append("Buildable\n");
+        } else {
+            sb.append("Unbuildable\n");
+        }
+
+        if (this.tower != null) {
+            sb.append(this.tower.toString());
+        }
+        if (!this.attackers.isEmpty()) {
+            this.attackers.stream().forEach(x -> sb.append(x.toString()));
+        }
+
+        return sb.toString();
+    }
 
 //    @Override
 //    public boolean equals(Object obj) {
@@ -135,8 +167,31 @@ public class Tile {
 //        return type == other.getType() && tower.equals(other.getTower()) 
 //                && buildable == other.isBuildable();
 //    }
-
-    private boolean isSpawn() {
+    public boolean isSpawn() {
         return this.type == Type.Spawn;
+    }
+
+    public Tile nextRoad(Tile previous) {
+        Tile next = previous;
+        List<Tile> options = new ArrayList();
+        options.add(this.east);
+        options.add(this.north);
+        options.add(this.south);
+        options.add(this.west);
+        Collections.shuffle(options);
+        while (next.equals(previous)) {
+            if (options.isEmpty()) {
+                return null;
+            }
+            next = options.remove(0);
+            if(!next.canMoveTo()) {
+                next = previous;
+            }
+        }
+        return next;
+    }
+
+    private boolean canMoveTo() {
+        return this.type == Type.Road;
     }
 }

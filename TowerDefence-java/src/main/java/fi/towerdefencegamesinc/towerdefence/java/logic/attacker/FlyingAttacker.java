@@ -5,6 +5,8 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
 
+import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
+
 /**
  * A template for a flying attacker. It can move more freely than non-flying
  * ones.
@@ -16,11 +18,23 @@ public class FlyingAttacker extends BasicAttacker {
     /**
      * Creates a flying attacker.
      *
+     * @param spawnLocation The location the attacker spawned in.
+     * @param speed The base speed of the attacker.
+     * @param damage The base damage of the attacker.
+     * @param health Base hitpoints for the attacker.
+     */
+    public FlyingAttacker(Tile spawnLocation, int speed, int damage, int health) {
+        super(spawnLocation, speed, damage, true, health);
+    }
+
+    /**
+     * Creates a flying attacker.
+     *
+     * @param spawnLocation The location the attacker spawned in.
      * @param speed The base speed of the attacker.
      * @param damage The base damage of the attacker.
      */
-    public FlyingAttacker(int speed, int damage) {
-        super(speed, damage, true);
+    public FlyingAttacker(Tile spawnLocation, int speed, int damage) {
+        super(spawnLocation, speed, damage, true, 100);
     }
-
 }

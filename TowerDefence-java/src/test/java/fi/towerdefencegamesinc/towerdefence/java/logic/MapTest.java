@@ -48,7 +48,7 @@ public class MapTest {
     @Test
     public void testGetScoreBoard() {
         System.out.println("getScoreBoard");
-        Map instance = new Map();
+        GameMap instance = new GameMap();
         ScoreBoard expResult = new ScoreBoard();
         ScoreBoard result = instance.getScoreBoard();
         assertEquals(expResult.getClass(), result.getClass());
@@ -62,7 +62,7 @@ public class MapTest {
         System.out.println("getTile");
         int x = 0;
         int y = 0;
-        Map instance = new Map();
+        GameMap instance = new GameMap();
         Tile expResult = null;
         Tile result = instance.getTile(x, y);
         assertEquals(expResult, result);
@@ -97,7 +97,7 @@ public class MapTest {
             fail("Failed to create temporary file for test");
             return;
         }
-        Map testMap = Map.loadMapFromFile(tmpF.getPath());
+        GameMap testMap = GameMap.loadMapFromFile(tmpF.getPath());
         tmpF.deleteOnExit();
         assertEquals(testMap.toString(), sb.toString());
     }

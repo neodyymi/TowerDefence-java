@@ -5,7 +5,10 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
 
+import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
+import fi.towerdefencegamesinc.towerdefence.java.logic.Type;
 import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.Modifier;
+import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.SlowModifier;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,6 +23,7 @@ import static org.junit.Assert.*;
 public class BasicAttackerTest {
     
     private Attacker basicAttacker;
+    private Tile tile;
     
     public BasicAttackerTest() {
     }
@@ -34,7 +38,8 @@ public class BasicAttackerTest {
     
     @Before
     public void setUp() {
-        this.basicAttacker = new BasicAttacker(10, 1000);
+        this.tile = new Tile(0, 0, Type.Spawn, false);
+        this.basicAttacker = new BasicAttacker(this.tile, 10, 1000);
     }
     
     @After
@@ -70,8 +75,9 @@ public class BasicAttackerTest {
      */
     @Test
     public void testAddModifier() {
-        this.basicAttacker.addModifier(new Modifier(1000L));
+        this.basicAttacker.addModifier(new SlowModifier(1000L, "Slowness", 50));
         assertTrue(1000L == this.basicAttacker.getModifiers().get(0).getDuration());
+        assertEquals("Slowness", this.basicAttacker.getModifiers().get(0).getName());
     }
 
     /**

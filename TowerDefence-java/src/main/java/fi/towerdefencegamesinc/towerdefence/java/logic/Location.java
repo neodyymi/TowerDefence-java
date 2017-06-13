@@ -44,4 +44,11 @@ public class Location {
         return Location.getDistance(location.x, location.y, other.x, other.y);
     }
 
+    @Override
+    public String toString() {
+        return ("(" + this.x + ", " + this.y + ")");
+    }
+    
+    
+
 }

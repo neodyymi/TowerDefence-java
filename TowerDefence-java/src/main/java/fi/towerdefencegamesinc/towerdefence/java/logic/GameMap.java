@@ -5,10 +5,13 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java.logic;
 
+import fi.towerdefencegamesinc.towerdefence.java.logic.attacker.Attacker;
+import fi.towerdefencegamesinc.towerdefence.java.logic.tower.Tower;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -20,7 +23,7 @@ import java.util.stream.Stream;
  *
  * @author vrsaari
  */
-public class Map {
+public class GameMap {
 
     private Tile[][] tiles;
     private ScoreBoard scoreBoard;
@@ -32,7 +35,7 @@ public class Map {
      * @param width The width of the map in tiles.
      * @param height The height of the map in tiles.
      */
-    public Map(int width, int height) {
+    public GameMap(int width, int height) {
         this.tiles = new Tile[width][height];
         this.spawns = new ArrayList();
         this.scoreBoard = new ScoreBoard();
@@ -42,7 +45,7 @@ public class Map {
      * Create a new map object with fixed width and height.
      *
      */
-    public Map() {
+    public GameMap() {
         this(10, 10);
     }
 
@@ -52,7 +55,7 @@ public class Map {
      * @param fileName File to read map information from.
      * @return Generated map object.
      */
-    public static Map loadMapFromFile(String fileName) {
+    public static GameMap loadMapFromFile(String fileName) {
         char[][] tmpTiles;
         try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
             tmpTiles = stream.map(s -> s.toCharArray()).toArray(char[][]::new);
@@ -60,7 +63,7 @@ public class Map {
             e.printStackTrace(System.out);
             return null;
         }
-        Map map = loadMapFromCharArray(tmpTiles);
+        GameMap map = loadMapFromCharArray(tmpTiles);
 
         return map;
     }
@@ -71,10 +74,10 @@ public class Map {
      * @param tmpTiles 2d char-array used to generate a map from.
      * @return Generated map object.
      */
-    public static Map loadMapFromCharArray(char[][] tmpTiles) {
+    public static GameMap loadMapFromCharArray(char[][] tmpTiles) {
         int width = tmpTiles[0].length;
         int height = tmpTiles.length;
-        Map map = new Map(width, height);
+        GameMap map = new GameMap(width, height);
         IntStream.range(0, height).forEach(i -> {
             IntStream.range(0, width).forEach(j -> {
                 switch (tmpTiles[i][j]) {
@@ -111,17 +114,18 @@ public class Map {
                     map.tiles[i][j].setWest(map.tiles[i][j - 1]);
                 }
             });
-        }); 
+        });
         return map;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        StringBuilder attackerTiles = new StringBuilder();
         Stream.of(tiles).forEach(x -> {
             Stream.of(x).forEach(tile -> {
                 Tile t = (Tile) tile;
-                if (t.getTower() == null) {
+                if (t.getTower() == null && t.getAttackers().isEmpty()) {
                     if (null != t.getType()) {
                         switch (t.getType()) {
                             case Road:
@@ -140,12 +144,21 @@ public class Map {
                                 break;
                         }
                     }
-                } else {
+                } else if (t.getTower() != null) {
                     sb.append(t.getTower().getCharRepr());
+                } else {
+                    int count = t.getAttackers().size();
+                    if(count < 10) {
+                        sb.append(count);
+                    } else {
+                        sb.append("*");
+                    }
+                    attackerTiles.append(t.toString()).append("\n");
                 }
             });
             sb.append("\n");
         });
+        sb.append("\n").append(attackerTiles);
         return sb.toString();
     }
 
@@ -184,8 +197,32 @@ public class Map {
     public Tile[][] getTiles() {
         return tiles;
     }
-    
+
+    /**
+     * Get random spawn point.
+     *
+     * @return a random spawn point.
+     */
     public Tile getRandomSpawn() {
         return this.spawns.get(new Random().nextInt(this.spawns.size()));
+    }
+
+    public List<Attacker> getAllAttackers() {
+        List<Attacker> attackers = new ArrayList();
+        Arrays.stream(this.tiles).forEach(row -> Arrays.stream(row).forEach(t -> {
+            attackers.addAll(t.getAttackers());
+        }));
+        return attackers;
+    }
+
+    public List<Tower> getAllTowers() {
+        List<Tower> towers = new ArrayList();
+        Arrays.stream(this.tiles).forEach(row -> Arrays.stream(row).forEach(t -> {
+            Tower tower = t.getTower();
+            if (tower != null) {
+                towers.add(t.getTower());
+            }
+        }));
+        return towers;
     }
 }

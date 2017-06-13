@@ -5,7 +5,8 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java;
 
-import fi.towerdefencegamesinc.towerdefence.java.logic.Score;
+import fi.towerdefencegamesinc.towerdefence.java.ui.TextUI;
+import java.util.Scanner;
 
 /**
  *
@@ -13,7 +14,10 @@ import fi.towerdefencegamesinc.towerdefence.java.logic.Score;
  */
 public class Main { 
     public static void main(String[] args) {
-        Score score = new Score("Testi", 12345);
-        System.out.println(score);
+        TextUI ui = new TextUI(new Scanner(System.in));
+        while(true) {
+            ui.update();
+        }
+        
     }
 }

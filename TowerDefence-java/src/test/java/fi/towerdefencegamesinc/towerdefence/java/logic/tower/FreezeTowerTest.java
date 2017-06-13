@@ -5,6 +5,9 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java.logic.tower;
 
+import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
+import fi.towerdefencegamesinc.towerdefence.java.logic.Type;
+import fi.towerdefencegamesinc.towerdefence.java.logic.attacker.BasicAttacker;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,6 +21,8 @@ import static org.junit.Assert.*;
  */
 public class FreezeTowerTest {
     private Tower freezeTower;
+    private Tile tile;
+    private BasicAttacker attacker;
     
     public FreezeTowerTest() {
     }
@@ -32,7 +37,9 @@ public class FreezeTowerTest {
     
     @Before
     public void setUp() {
-        this.freezeTower = new FreezeTower();
+        this.tile = new Tile(0, 0, Type.Spawn, false);
+        this.attacker = new BasicAttacker(this.tile, 1, 1);
+        this.freezeTower = new FreezeTower(this.tile);
     }
     
     @After
@@ -44,7 +51,7 @@ public class FreezeTowerTest {
      */
     @Test
     public void testShoot() {
-        assertEquals(1, this.freezeTower.shoot());
+        assertEquals(1, this.freezeTower.shoot(this.attacker));
     }
 
     /**

@@ -13,14 +13,17 @@ package fi.towerdefencegamesinc.towerdefence.java.logic;
 public class Player {
 
     private String name;
+    private int currency;
 
     /**
      * Create a player object.
      *
      * @param name The name of the player.
+     * @param currency Amount of game currency.
      */
-    public Player(String name) {
+    public Player(String name, int currency) {
         this.name = name;
+        this.currency = currency;
     }
 
     public String getName() {
@@ -31,4 +34,11 @@ public class Player {
         this.name = name;
     }
 
+    public int getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(int currency) {
+        this.currency = currency;
+    }
 }
