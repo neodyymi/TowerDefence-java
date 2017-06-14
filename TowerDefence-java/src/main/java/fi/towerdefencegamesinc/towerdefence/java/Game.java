@@ -48,6 +48,10 @@ public class Game {
     }
 
     public void update() {
+        if (player.gameOver()) {
+            System.out.println("------------\n\n\n\n\n\nGAME OVER\n\n\n\n\n\n------------");
+            return;
+        }
         List<Attacker> attackers = map.getAllAttackers();
         List<Attacker> attackersInBase = attackers.stream()
                 .filter(x -> x.getTile().isBase()).collect(Collectors.toList());

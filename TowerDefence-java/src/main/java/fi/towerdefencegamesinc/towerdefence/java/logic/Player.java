@@ -59,6 +59,10 @@ public class Player {
         return "Name: " + this.name + ", currency: " + this.currency 
                 + ", base: " + this.health;
     }
+
+    public boolean gameOver() {
+        return this.health <= 0;
+    }
     
     
 }
