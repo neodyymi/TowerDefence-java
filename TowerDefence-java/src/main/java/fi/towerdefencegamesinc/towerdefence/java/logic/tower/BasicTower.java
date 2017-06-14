@@ -74,7 +74,7 @@ public class BasicTower implements Tower {
             return 0;
         }
         this.target = target;
-        double damage = this.baseDamage * this.power * this.level;
+        double damage = this.baseDamage * this.power * (this.level+1);
         this.target.takeDamage((int) damage);
         this.lastShot = new Date().getTime();
         System.out.println(this.tile.getLocation().toString() + " tower shot " 
