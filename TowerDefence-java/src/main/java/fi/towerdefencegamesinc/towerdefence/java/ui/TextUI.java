@@ -8,8 +8,10 @@ package fi.towerdefencegamesinc.towerdefence.java.ui;
 import fi.towerdefencegamesinc.towerdefence.java.Game;
 import fi.towerdefencegamesinc.towerdefence.java.ui.Action.Action;
 import fi.towerdefencegamesinc.towerdefence.java.ui.Action.ContinueCommand;
+import fi.towerdefencegamesinc.towerdefence.java.ui.Action.HelpCommand;
 import fi.towerdefencegamesinc.towerdefence.java.ui.Action.ScoreCommand;
 import fi.towerdefencegamesinc.towerdefence.java.ui.Action.TowerCommand;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Supplier;
@@ -26,33 +28,38 @@ public class TextUI {
     
 
     public TextUI(Scanner scanner) {
+        this.commands = new HashMap();
         this.scanner = scanner;
         System.out.print("Name? ");
         String playerName = this.scanner.nextLine();
         System.out.print("Start currency? ");
         int startCurrency = Integer.parseInt(this.scanner.nextLine());
-        System.out.println("Name of mapfile? ");
+        System.out.print("Name of mapfile? ");
         String mapFileName = this.scanner.nextLine();
         this.game = new Game(mapFileName, playerName, startCurrency);
         
         commands.put("TOWER", TowerCommand::new);
         commands.put("SCORE", ScoreCommand::new);
         commands.put("CONTINUE", ContinueCommand::new);
+        commands.put("HELP", HelpCommand::new);
         
     }
     
     public void update() {
+        printPlayer();
         printMap();
-        Help.help();
+        Help.commands();
         String cmd = scanner.nextLine();
-        if(!cmd.isEmpty()) {
+        if(cmd.isEmpty()) {
             cmd = "CONTINUE";
         }
-        commands.get(cmd).get().run(cmd, game);
+        System.out.println(cmd);
+        commands.getOrDefault(cmd.split("\\s+")[0].toUpperCase(), commands.get("HELP"))
+                .get().run(cmd, game);
     }
     
     public void printScores(int n) {
-        this.game.getMap().getScoreBoard().getScores(n);
+        System.out.println(this.game.getMap().getScoreBoard().getScores(n));
     }
     
     public void printScores() {
@@ -60,6 +67,9 @@ public class TextUI {
     }
     
     public void printMap() {
-        this.game.getMap().toString();
+        System.out.println(this.game.getMap().toString());
     }    
+    public void printPlayer() {
+        System.out.println(this.game.getPlayer().toString());
+    }
 }

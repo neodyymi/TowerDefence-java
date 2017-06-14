@@ -14,16 +14,23 @@ public class Player {
 
     private String name;
     private int currency;
+    private int health;
 
     /**
      * Create a player object.
      *
      * @param name The name of the player.
      * @param currency Amount of game currency.
+     * @param health Health of players base.
      */
-    public Player(String name, int currency) {
+    public Player(String name, int currency, int health) {
         this.name = name;
         this.currency = currency;
+        this.health = health;
+    }
+    
+    public Player(String name, int currency) {
+        this(name, currency, 100);
     }
 
     public String getName() {
@@ -41,4 +48,17 @@ public class Player {
     public void setCurrency(int currency) {
         this.currency = currency;
     }
+
+    public void takeDamage(int damageToBase) {
+        this.health -= damageToBase;
+        System.out.println("Player took " + damageToBase + " damage.");
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + this.name + ", currency: " + this.currency 
+                + ", base: " + this.health;
+    }
+    
+    
 }

@@ -71,5 +71,17 @@ public interface Attacker {
      */
     public Tile getTile();
     
+    /**
+     * Inform the attacker it has been hit with an amount of damage.
+     * @param amount Amount of damage taken.
+     */
+    public void takeDamage(int amount);
+    
+    /**
+     *
+     * @return True if the attacker is dead.
+     */
+    public boolean isDead();
+    
     
 }

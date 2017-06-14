@@ -14,7 +14,8 @@ public enum Type {
     Road(' '),
     Buildable('@'),
     Unbuildable('#'),
-    Spawn('X');
+    Spawn('X'),
+    Base('$');
 
     private final char representation;
 

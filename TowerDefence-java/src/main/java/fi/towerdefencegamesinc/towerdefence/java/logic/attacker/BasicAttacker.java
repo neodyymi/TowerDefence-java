@@ -5,15 +5,12 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
 
-import fi.towerdefencegamesinc.towerdefence.java.logic.Location;
 import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
 import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.Modifier;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.IntConsumer;
-import java.util.stream.IntStream;
 
 /**
  * A basic type of attacker which serves as both a basic minion and a
@@ -23,8 +20,8 @@ import java.util.stream.IntStream;
  */
 public class BasicAttacker implements Attacker {
 
-    private int speed;
-    private int damage;
+    private double speed;
+    private double damage;
     private Set<Modifier> modifiers;
     private boolean flying;
     private int health;
@@ -32,6 +29,9 @@ public class BasicAttacker implements Attacker {
     
     private Tile current;
     private Tile previous;
+    private double movementsLeft;
+    private final double baseSpeed;
+    private final int baseDamage;
 
     /**
      * Creates an attacker.
@@ -42,12 +42,15 @@ public class BasicAttacker implements Attacker {
      * @param flying Does the attacker fly?
      * @param health Base hitpoints for the attacker.
      */
-    public BasicAttacker(Tile spawnLocation, int speed, int damage, boolean flying, int health) {
+    public BasicAttacker(Tile spawnLocation, double speed, int damage, boolean flying, int health) {
         this.speed = speed;
+        this.baseSpeed = speed;
         this.damage = damage;
+        this.baseDamage = damage;
         this.flying = flying;
         this.health = health;
         this.baseHealth = health;
+        this.movementsLeft = 0;
         
         this.previous = null;
         this.current = spawnLocation;
@@ -63,7 +66,7 @@ public class BasicAttacker implements Attacker {
      * @param damage The base damage for the attacker.
      * @param flying Does the attacker fly?
      */
-    public BasicAttacker(Tile spawnLocation, int speed, int damage, boolean flying) {
+    public BasicAttacker(Tile spawnLocation, double speed, int damage, boolean flying) {
         this(spawnLocation, speed, damage, flying, 100);
 
         this.modifiers = new HashSet();
@@ -76,26 +79,37 @@ public class BasicAttacker implements Attacker {
      * @param speed The base speed for the attacker.
      * @param damage The base damage for the attacker.
      */
-    public BasicAttacker(Tile spawnLocation, int speed, int damage) {
+    public BasicAttacker(Tile spawnLocation, double speed, int damage) {
         this(spawnLocation, speed, damage, false, 100);
+    }
+    
+    public BasicAttacker(Tile spawnLocation) {
+        this(spawnLocation, 0.5, 1);
     }
 
     @Override
     public void move() {
-        IntStream.range(0, this.speed).forEach((int x) -> {
+        if(this.current.isBase()) {
+            return;
+        }
+        this.movementsLeft += this.speed;
+        while(this.movementsLeft >= 1) {
             Tile next = this.current.nextRoad(this.previous);
             if(next != null) {
                 this.current.removeAttacker(this);
+                this.previous = this.current;
                 this.current = next;
                 this.current.addAttacker(this);
+                this.movementsLeft--;
+            } else {
+                break;
             }
-            
-        });
+        }
     }
 
     @Override
     public int attack() {
-        return this.damage;
+        return (int) this.damage;
     }
 
     @Override
@@ -120,15 +134,15 @@ public class BasicAttacker implements Attacker {
 
     @Override
     public int getSpeed() {
-        return this.speed;
+        return (int) this.speed;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        String flying = "";
+        String flyingStr = "";
         if (this.flying) {
-            flying = "flying ";
+            flyingStr = "flying, ";
         }
         String modString = "none";
         if (!this.modifiers.isEmpty()) {
@@ -141,7 +155,7 @@ public class BasicAttacker implements Attacker {
 
         }
         sb.append("Basic ")
-                .append(flying)
+                .append(flyingStr)
                 .append("speed: ").append(this.speed)
                 .append(", damage: ").append(this.damage)
                 .append(", health: ").append(this.health).append("/").append(this.baseHealth)
@@ -153,6 +167,20 @@ public class BasicAttacker implements Attacker {
     @Override
     public Tile getTile() {
         return this.current;    
+    }
+
+    @Override
+    public void takeDamage(int amount) {
+        this.health -= amount;
+        if(this.isDead()) {
+            this.current.removeAttacker(this);
+            System.out.println("Attacker in " + this.getTile().getLocation().toString() + " is dead.");
+        }
+    }
+
+    @Override
+    public boolean isDead() {
+        return this.health <= 0;
     }
 
 }

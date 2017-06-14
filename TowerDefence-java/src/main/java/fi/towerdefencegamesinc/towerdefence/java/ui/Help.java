@@ -16,7 +16,7 @@ public class Help {
     }
     
     public static void commands() {
-        String response = "Available commands: tower, score. Enter to update.";
+        String response = "Available commands: tower, score, continue. Enter to update.";
         System.out.println(response);
     }
     

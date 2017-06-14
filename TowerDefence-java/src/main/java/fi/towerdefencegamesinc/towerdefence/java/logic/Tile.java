@@ -122,16 +122,11 @@ public class Tile {
     }
 
     public boolean addAttacker(Attacker attacker) {
-        if (this.isSpawn()) {
-            this.attackers.add(attacker);
-            return true;
-        } else {
-            return false;
-        }
+        return this.attackers.add(attacker);
     }
-    
-    public void removeAttacker(Attacker attacker) {
-        this.attackers.remove(attacker);
+
+    public boolean removeAttacker(Attacker attacker) {
+        return this.attackers.remove(attacker);
     }
 
     public List<Attacker> getAttackers() {
@@ -172,26 +167,47 @@ public class Tile {
     }
 
     public Tile nextRoad(Tile previous) {
-        Tile next = previous;
+        Tile next = null;
         List<Tile> options = new ArrayList();
-        options.add(this.east);
-        options.add(this.north);
-        options.add(this.south);
-        options.add(this.west);
+        if (this.east != null) {
+            options.add(this.east);
+            //System.out.println("East: " + this.east.toString());
+        }
+        if (this.south != null) {
+            options.add(this.south);
+            //System.out.println("South: " + this.south.toString());
+        }
+        if (this.north != null) {
+            options.add(this.north);
+            //System.out.println("North: " + this.north.toString());
+        }
+        if (this.west != null) {
+            options.add(this.west);
+            //System.out.println("West: " + this.west.toString());
+        }
         Collections.shuffle(options);
-        while (next.equals(previous)) {
+        while (next == null) {
             if (options.isEmpty()) {
                 return null;
             }
             next = options.remove(0);
-            if(!next.canMoveTo()) {
-                next = previous;
+
+            if (!next.canMoveTo()) {
+                next = null;
+            } else if(next == previous) {
+                next = null;
+            } else {
+                break;
             }
         }
         return next;
     }
 
     private boolean canMoveTo() {
-        return this.type == Type.Road;
+        return this.type == Type.Road || this.type == Type.Spawn || this.type == Type.Base;
+    }
+
+    public boolean isBase() {
+        return this.type == Type.Base;
     }
 }

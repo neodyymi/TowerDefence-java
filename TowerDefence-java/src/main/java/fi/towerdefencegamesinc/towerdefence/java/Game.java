@@ -6,11 +6,14 @@
 package fi.towerdefencegamesinc.towerdefence.java;
 
 import fi.towerdefencegamesinc.towerdefence.java.logic.GameMap;
-import fi.towerdefencegamesinc.towerdefence.java.logic.Location;
 import fi.towerdefencegamesinc.towerdefence.java.logic.Player;
+import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
 import fi.towerdefencegamesinc.towerdefence.java.logic.attacker.Attacker;
+import fi.towerdefencegamesinc.towerdefence.java.logic.attacker.BasicAttacker;
 import fi.towerdefencegamesinc.towerdefence.java.logic.tower.Tower;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -46,15 +49,40 @@ public class Game {
 
     public void update() {
         List<Attacker> attackers = map.getAllAttackers();
-        attackers.stream().forEach(Attacker::move);
+        List<Attacker> attackersInBase = attackers.stream()
+                .filter(x -> x.getTile().isBase()).collect(Collectors.toList());
+        int damageToBase = attackersInBase.stream()
+                .mapToInt(Attacker::attack).sum();
+        if (damageToBase > 0) {
+            this.player.takeDamage(damageToBase);
+        }
+        attackers.removeAll(attackersInBase);
+        System.out.println("Attackers: " + attackers.size());
+        attackers.stream().forEach(a -> a.move());
         List<Tower> towers = map.getAllTowers();
+        System.out.println("Towers: " + towers.size());
         towers.stream().forEach(t -> {
             Tower tower = (Tower) t;
+            System.out.println("Checking tower range: " + tower.getCharRepr() + " " + tower.toString());
             Attacker target = tower.getTarget(attackers);
             if (target != null) {
+                System.out.println("shooting at target");
                 tower.shoot(target);
+            } else {
+                System.out.println("Target is null");
             }
         });
+        if (new Random().nextInt(3) == 0) {
+            this.spawnAttacker();
+        }
+    }
+
+    public boolean spawnAttacker() {
+        Tile spawn = this.map.getRandomSpawn();
+        System.out.println("Spawnpoint : " + spawn.toString());
+        Attacker attacker = new BasicAttacker(spawn);
+        spawn.addAttacker(attacker);
+        return true;
     }
 
 }

@@ -21,12 +21,13 @@ public class BasicTower implements Tower {
 
     private int level;
     private int power;
-    private int speed;
+    private double speed;
     private long lastShot;
     private int[] upgradeCost;
     private Tile tile;
     private Attacker target;
     private double range;
+    private double baseDamage;
 
     /**
      * Create a basic tower with given parameters.
@@ -34,6 +35,7 @@ public class BasicTower implements Tower {
      * @param tile The tile the tower is located in.
      * @param power The power of the tower.
      * @param speed The firingspeed of the tower.
+     * @param range
      * @param upgradeCost Array of costs to upgrade the tower.
      */
     public BasicTower(Tile tile, int power, int speed, double range, int[] upgradeCost) {
@@ -43,6 +45,9 @@ public class BasicTower implements Tower {
         this.lastShot = 0;
         this.upgradeCost = upgradeCost;
         this.tile = tile;
+        this.baseDamage = 5.0;
+        this.target = null;
+        this.range = range;
     }
 
     /**
@@ -51,7 +56,7 @@ public class BasicTower implements Tower {
      * @param tile The tile the tower is located in.
      */
     public BasicTower(Tile tile) {
-        this(tile, 1, 1000, 3, new int[]{1, 2, 3, 4, 5});
+        this(tile, 1, 1000, 3.0, new int[]{1, 2, 3, 4, 5});
     }
     
     public BasicTower() {
@@ -60,9 +65,21 @@ public class BasicTower implements Tower {
 
     @Override
     public int shoot(Attacker target) {
+        if(!this.readyToShoot()) {
+            System.out.println(this.tile.getLocation().toString() + " tower is not ready.");
+            return 0;
+        }
+        if(Location.getDistance(this.tile.getLocation(), target.getTile().getLocation()) > this.range) {
+            System.out.println(this.tile.getLocation().toString() + " tower not in range of any attacker.");
+            return 0;
+        }
         this.target = target;
+        double damage = this.baseDamage * this.power * this.level;
+        this.target.takeDamage((int) damage);
         this.lastShot = new Date().getTime();
-        return 1 * power;
+        System.out.println(this.tile.getLocation().toString() + " tower shot " 
+                + target.toString() + " for " + damage + " damage.");
+        return (int) damage;
     }
 
     @Override
@@ -114,10 +131,12 @@ public class BasicTower implements Tower {
     @Override
     public Attacker getTarget(List<Attacker> attackers) {
         if(this.tile == null) {
+            //System.out.println("TILE NULL");
             return null;
         }
-        if(Location.getDistance(this.getTile().getLocation(),
-                                this.target.getTile().getLocation()) <= this.range) {
+        if(target != null && Location.getDistance(this.getTile().getLocation(),
+                                this.target.getTile().getLocation()) <= this.range && !target.isDead()) {
+            //System.out.println("CURRENT TARGET IS FINE");
             return this.target;
         }
         final Comparator<Attacker> comp = (a1, a2)
@@ -126,10 +145,19 @@ public class BasicTower implements Tower {
                                 a1.getTile().getLocation()),
                         Location.getDistance(this.getTile().getLocation(),
                                 a2.getTile().getLocation()));
-        Attacker closest = attackers.stream().min(comp).get();
+        Attacker closest = attackers.stream().min(comp).orElse(null);
+        if(closest == null) return null;
+        //System.out.println("Closest target: " + closest.toString());
+        //System.out.println("Distance: " + Location.getDistance(
+        //        this.getTile().getLocation(), closest.getTile().getLocation()
+        //));
         if(Location.getDistance(this.getTile().getLocation(),
                                 closest.getTile().getLocation()) <= this.range) {
+            //System.out.println("Closest is close enough");
             return closest;
+        } else {
+            
+            //System.out.println("Closest is too far. " + this.range + " vs " + Location.getDistance(this.getTile().getLocation(), closest.getTile().getLocation()));
         }
         return null;
     }

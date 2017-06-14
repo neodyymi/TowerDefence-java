@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -35,8 +34,8 @@ public class GameMap {
      * @param width The width of the map in tiles.
      * @param height The height of the map in tiles.
      */
-    public GameMap(int width, int height) {
-        this.tiles = new Tile[width][height];
+    public GameMap(int height, int width) {
+        this.tiles = new Tile[height][width];
         this.spawns = new ArrayList();
         this.scoreBoard = new ScoreBoard();
     }
@@ -77,9 +76,9 @@ public class GameMap {
     public static GameMap loadMapFromCharArray(char[][] tmpTiles) {
         int width = tmpTiles[0].length;
         int height = tmpTiles.length;
-        GameMap map = new GameMap(width, height);
-        IntStream.range(0, height).forEach(i -> {
-            IntStream.range(0, width).forEach(j -> {
+        GameMap map = new GameMap(height, width);
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 switch (tmpTiles[i][j]) {
                     case ' ':
                         map.tiles[i][j] = new Tile(j, i, Type.Road, false);
@@ -92,29 +91,33 @@ public class GameMap {
                         break;
                     case 'X':
                         map.tiles[i][j] = new Tile(j, i, Type.Spawn, false);
+                        map.addSpawn(map.tiles[i][j]);
+                        break;
+                    case '$':
+                        map.tiles[i][j] = new Tile(j, i, Type.Base, false);
                         break;
                     default:
                         break;
                 }
 
-            });
-        });
-        IntStream.range(0, height).forEach(i -> {
-            IntStream.range(0, width).forEach(j -> {
+            }
+        }
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 if (i > 0) {
                     map.tiles[i][j].setNorth(map.tiles[i - 1][j]);
                 }
                 if (i < map.tiles.length - 1) {
                     map.tiles[i][j].setSouth(map.tiles[i + 1][j]);
                 }
-                if (j > 0) {
+                if (j < map.tiles[i].length - 1) {
                     map.tiles[i][j].setEast(map.tiles[i][j + 1]);
                 }
-                if (i < map.tiles[i].length - 1) {
+                if (j > 0) {
                     map.tiles[i][j].setWest(map.tiles[i][j - 1]);
                 }
-            });
-        });
+            }
+        }
         return map;
     }
 
@@ -140,6 +143,8 @@ public class GameMap {
                             case Spawn:
                                 sb.append(Type.Spawn.toString());
                                 break;
+                            case Base:
+                                sb.append(Type.Base.toString());
                             default:
                                 break;
                         }
@@ -148,7 +153,7 @@ public class GameMap {
                     sb.append(t.getTower().getCharRepr());
                 } else {
                     int count = t.getAttackers().size();
-                    if(count < 10) {
+                    if (count < 10) {
                         sb.append(count);
                     } else {
                         sb.append("*");
@@ -204,6 +209,7 @@ public class GameMap {
      * @return a random spawn point.
      */
     public Tile getRandomSpawn() {
+        System.out.println("Spawns: " + this.spawns.size());
         return this.spawns.get(new Random().nextInt(this.spawns.size()));
     }
 
@@ -224,5 +230,15 @@ public class GameMap {
             }
         }));
         return towers;
+    }
+
+    public void removeAttackers(List<Attacker> attackers) {
+        attackers.stream().forEach(a -> {
+            a.getTile().removeAttacker(a);
+        });
+    }
+    
+    public void addSpawn(Tile tile) {
+        this.spawns.add(tile);
     }
 }
