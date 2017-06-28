@@ -5,6 +5,7 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java;
 
+import fi.towerdefencegamesinc.towerdefence.java.logic.Difficulty;
 import fi.towerdefencegamesinc.towerdefence.java.logic.GameMap;
 import fi.towerdefencegamesinc.towerdefence.java.logic.Player;
 import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
@@ -25,7 +26,8 @@ public class Game {
     private final Player player;
     private int score;
 
-    public Game(String mapFile, String playerName, int startCurrency) {
+    public Game(String mapFile, String playerName, Difficulty difficulty) {
+        int startCurrency = 1000 - difficulty.getDifficulty() * 250;
         this.map = GameMap.loadMapFromFile(mapFile);
         this.player = new Player(playerName, startCurrency);
         this.score = 0;

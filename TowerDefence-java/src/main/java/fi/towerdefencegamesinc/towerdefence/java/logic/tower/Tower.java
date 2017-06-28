@@ -87,4 +87,12 @@ public interface Tower {
 
     public void setTile(Tile tile);
 
+    public int getWorth();
+
+    public int getBuildCost();
+
+    @Override
+    public String toString();
+
+    
 }

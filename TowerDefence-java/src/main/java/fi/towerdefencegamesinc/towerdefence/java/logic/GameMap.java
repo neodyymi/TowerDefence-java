@@ -7,6 +7,8 @@ package fi.towerdefencegamesinc.towerdefence.java.logic;
 
 import fi.towerdefencegamesinc.towerdefence.java.logic.attacker.Attacker;
 import fi.towerdefencegamesinc.towerdefence.java.logic.tower.Tower;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -27,6 +29,8 @@ public class GameMap {
     private Tile[][] tiles;
     private ScoreBoard scoreBoard;
     private List<Tile> spawns;
+    
+    private static final String MAPS_PATH = "./maps/";
 
     /**
      * Create a new Map object with given width and height.
@@ -56,7 +60,7 @@ public class GameMap {
      */
     public static GameMap loadMapFromFile(String fileName) {
         char[][] tmpTiles;
-        try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
+        try (Stream<String> stream = Files.lines(Paths.get(MAPS_PATH + fileName))) {
             tmpTiles = stream.map(s -> s.toCharArray()).toArray(char[][]::new);
         } catch (IOException e) {
             e.printStackTrace(System.out);
@@ -237,8 +241,23 @@ public class GameMap {
             a.getTile().removeAttacker(a);
         });
     }
-    
+
     public void addSpawn(Tile tile) {
         this.spawns.add(tile);
+    }
+
+    public int getWidth() {
+        return this.tiles[0].length;
+    }
+
+    public int getHeight() {
+        return this.tiles.length;
+    }
+
+    public static ArrayList<String> mapFiles() throws IOException {
+        File dir = new File(MAPS_PATH);
+        ArrayList<String> files = new ArrayList(Arrays.asList(dir.list((d, name) -> name.endsWith(".map"))));
+
+        return files;
     }
 }

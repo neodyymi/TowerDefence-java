@@ -6,7 +6,7 @@
 package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
 
 import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
-import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.Modifier;
+import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.BasicModifier;
 import java.util.List;
 
 /**
@@ -41,14 +41,14 @@ public interface Attacker {
      *
      * @param mod Modifier to be added.
      */
-    public void addModifier(Modifier mod);
+    public void addModifier(BasicModifier mod);
 
     /**
      * Get all modifiers modifying the attacker.
      *
      * @return List of modifiers.
      */
-    public List<Modifier> getModifiers();
+    public List<BasicModifier> getModifiers();
 
     /**
      * Make the modifiers tick forward in effect and duration.

@@ -9,7 +9,7 @@ package fi.towerdefencegamesinc.towerdefence.java.logic.modifier;
  *
  * @author vrsaari
  */
-public class SlowModifier extends Modifier {
+public class SlowModifier extends BasicModifier {
 
     public SlowModifier(Long duration, String name, int strength) {
         super(duration, name, strength / 100);

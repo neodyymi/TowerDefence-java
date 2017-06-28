@@ -6,7 +6,7 @@
 package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
 
 import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
-import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.Modifier;
+import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.BasicModifier;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +22,7 @@ public class BasicAttacker implements Attacker {
 
     private double speed;
     private double damage;
-    private Set<Modifier> modifiers;
+    private Set<BasicModifier> modifiers;
     private boolean flying;
     private int health;
     private final int baseHealth;
@@ -118,12 +118,12 @@ public class BasicAttacker implements Attacker {
     }
 
     @Override
-    public void addModifier(Modifier mod) {
+    public void addModifier(BasicModifier mod) {
         this.modifiers.add(mod);
     }
 
     @Override
-    public List<Modifier> getModifiers() {
+    public List<BasicModifier> getModifiers() {
         return new ArrayList(this.modifiers);
     }
 
@@ -146,7 +146,7 @@ public class BasicAttacker implements Attacker {
         }
         String modString = "none";
         if (!this.modifiers.isEmpty()) {
-            List<Modifier> modList = new ArrayList(this.modifiers);
+            List<BasicModifier> modList = new ArrayList(this.modifiers);
             StringBuilder mods = new StringBuilder(modList.get(0).toString());
             modList.stream().skip(1).forEach(x -> {
                 mods.append(", ");

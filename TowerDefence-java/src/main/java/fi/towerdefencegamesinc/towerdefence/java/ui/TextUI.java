@@ -6,6 +6,7 @@
 package fi.towerdefencegamesinc.towerdefence.java.ui;
 
 import fi.towerdefencegamesinc.towerdefence.java.Game;
+import fi.towerdefencegamesinc.towerdefence.java.logic.Difficulty;
 import fi.towerdefencegamesinc.towerdefence.java.ui.Action.Action;
 import fi.towerdefencegamesinc.towerdefence.java.ui.Action.ContinueCommand;
 import fi.towerdefencegamesinc.towerdefence.java.ui.Action.HelpCommand;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  *
@@ -32,17 +34,23 @@ public class TextUI {
         this.scanner = scanner;
         System.out.print("Name? ");
         String playerName = this.scanner.nextLine();
-        System.out.print("Start currency? ");
-        int startCurrency = Integer.parseInt(this.scanner.nextLine());
+        System.out.print("Difficulty? (" + Stream.of(Difficulty.values()).map(Difficulty::toString).reduce(", ", String::concat));
+        Difficulty difficulty = Difficulty.valueOf(this.scanner.nextLine().toUpperCase());
         System.out.print("Name of mapfile? ");
         String mapFileName = this.scanner.nextLine();
-        this.game = new Game(mapFileName, playerName, startCurrency);
+        this.game = new Game(mapFileName, playerName, difficulty);
         
         commands.put("TOWER", TowerCommand::new);
         commands.put("SCORE", ScoreCommand::new);
         commands.put("CONTINUE", ContinueCommand::new);
         commands.put("HELP", HelpCommand::new);
         
+    }
+    
+    public void run() {
+        while (true) {
+            this.update();
+        }
     }
     
     public void update() {

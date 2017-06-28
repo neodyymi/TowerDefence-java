@@ -120,6 +120,15 @@ public class Tile {
             return false;
         }
     }
+    
+    public boolean removeTower(Tower tower) {
+        if (this.tower.equals(tower)) {
+            this.tower = null;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public boolean addAttacker(Attacker attacker) {
         return this.attackers.add(attacker);
@@ -150,7 +159,7 @@ public class Tile {
             sb.append(this.tower.toString());
         }
         if (!this.attackers.isEmpty()) {
-            this.attackers.stream().forEach(x -> sb.append(x.toString()));
+            this.attackers.stream().forEach(x -> sb.append("\n").append(x.toString()));
         }
 
         return sb.toString();

@@ -13,7 +13,7 @@ import java.util.Date;
  *
  * @author vrsaari
  */
-public abstract class Modifier {
+public abstract class BasicModifier implements Modifier {
 
     private Date startTime;
     private Long duration;
@@ -27,7 +27,7 @@ public abstract class Modifier {
      * @param name
      * @param strength
      */
-    public Modifier(Long duration, String name, int strength) {
+    public BasicModifier(Long duration, String name, int strength) {
         this.startTime = new Date();
         this.duration = duration;
         this.strength = strength;
@@ -37,22 +37,27 @@ public abstract class Modifier {
      *
      * @return Duration left on the modifier in milliseconds.
      */
+    @Override
     public Long getDurationLeft() {
         return duration - (this.startTime.getTime() - new Date().getTime());
     }
 
+    @Override
     public Date getStartTime() {
         return startTime;
     }
 
+    @Override
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
+    @Override
     public Long getDuration() {
         return duration;
     }
 
+    @Override
     public void setDuration(Long duration) {
         this.duration = duration;
     }
@@ -62,26 +67,29 @@ public abstract class Modifier {
      *
      * @param attacker
      */
+    @Override
     public void update(Attacker attacker) {
         // Do somethign to the attacker.
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
     
+    @Override
     public String getName() {
         return this.name;
     }
 
+    @Override
     public int getStrength() {
         return strength;
     }
 
+    @Override
     public void setStrength(int strength) {
         this.strength = strength;
     }
 
-    @Override
-    public abstract String toString();
 }

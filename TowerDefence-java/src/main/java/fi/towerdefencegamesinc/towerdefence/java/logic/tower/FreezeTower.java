@@ -14,6 +14,9 @@ import fi.towerdefencegamesinc.towerdefence.java.logic.attacker.Attacker;
  * @author vrsaari
  */
 public class FreezeTower extends BasicTower {
+    
+    private static final int COST = 200;
+    private static final int[] UPGRADE_COST = new int[]{200, 400, 600, 800, 1000};
 
     /**
      * Create a freeze tower with the given parameters.
@@ -24,7 +27,7 @@ public class FreezeTower extends BasicTower {
      * @param upgradeCost Array of costs to upgrade the tower.
      */
     public FreezeTower(Tile tile, int power, int speed, double range, int[] upgradeCost) {
-        super(tile, power, speed, range, upgradeCost);
+        super(tile, power, speed, range, upgradeCost, COST);
     }
 
     /**
@@ -32,7 +35,7 @@ public class FreezeTower extends BasicTower {
      * @param tile The tile the tower is located in.
      */
     public FreezeTower(Tile tile) {
-        this(tile, 1, 1000, 2, new int[]{2, 4, 6, 8, 10});
+        this(tile, 1, 1000, 2, UPGRADE_COST);
     }
     
     public FreezeTower() {

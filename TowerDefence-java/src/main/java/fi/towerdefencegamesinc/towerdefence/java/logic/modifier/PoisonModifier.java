@@ -9,7 +9,7 @@ package fi.towerdefencegamesinc.towerdefence.java.logic.modifier;
  *
  * @author vrsaari
  */
-public class PoisonModifier extends Modifier {
+public class PoisonModifier extends BasicModifier {
 
     public PoisonModifier(Long duration, String name, int strength) {
         super(duration, name, strength);
