@@ -8,7 +8,6 @@ package fi.towerdefencegamesinc.towerdefence.java.logic;
 import fi.towerdefencegamesinc.towerdefence.java.logic.attacker.Attacker;
 import fi.towerdefencegamesinc.towerdefence.java.logic.tower.Tower;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;

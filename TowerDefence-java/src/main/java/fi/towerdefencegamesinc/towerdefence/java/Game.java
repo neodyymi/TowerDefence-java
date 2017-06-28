@@ -25,12 +25,20 @@ public class Game {
     private final GameMap map;
     private final Player player;
     private int score;
+    
+    private int[] wavesOfAttackers;
+    private int nextWave;
+    private int spawnedCurrentWave;
+    private boolean currentWaveFinished;
 
     public Game(String mapFile, String playerName, Difficulty difficulty) {
         int startCurrency = 1000 - difficulty.getDifficulty() * 250;
         this.map = GameMap.loadMapFromFile(mapFile);
         this.player = new Player(playerName, startCurrency);
         this.score = 0;
+        this.nextWave = 0;
+        this.spawnedCurrentWave = 0;
+        this.wavesOfAttackers = new int[]{5,10,15,20,25};
     }
 
     public int getScore() {
@@ -79,16 +87,36 @@ public class Game {
             }
         });
         if (new Random().nextInt(3) == 0) {
-            this.spawnAttacker();
+            if(!this.spawnAttacker() && this.getMap().getAllAttackers().isEmpty()) {
+                this.currentWaveFinished = true;
+            }
         }
     }
 
     public boolean spawnAttacker() {
+        if(this.spawnedCurrentWave >= this.wavesOfAttackers[this.nextWave-1]) {
+            return false;
+        }
+        this.spawnedCurrentWave++;
         Tile spawn = this.map.getRandomSpawn();
         System.out.println("Spawnpoint : " + spawn.toString());
         Attacker attacker = new BasicAttacker(spawn);
         spawn.addAttacker(attacker);
         return true;
+    }
+
+    public int getNextWave() {
+        return this.nextWave;
+    }
+    
+    public void startNextWave() {
+        this.nextWave++;
+        this.currentWaveFinished = false;
+        this.spawnedCurrentWave = 0;
+    }
+
+    public boolean currentWaveFinished() {
+        return this.currentWaveFinished;
     }
 
 }

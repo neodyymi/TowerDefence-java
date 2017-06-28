@@ -138,8 +138,6 @@ public class GraphicalUI extends Application {
 
                 }
             }.start();
-            //System.out.println(this.right.getBoundsInLocal());
-            //System.out.println(this.right.getBoundsInParent());
 
             new AnimationTimer() {
                 long previousTime = 0;
@@ -214,9 +212,12 @@ public class GraphicalUI extends Application {
         sidePanelDefaults.setBackground(new Background(new BackgroundFill(Color.CORAL, CornerRadii.EMPTY, Insets.EMPTY)));
         sidePanelDefaults.setSpacing(10);
         Text first = new Text();
-        Button startRoundButton = new Button("Start next round");
+        Button startRoundButton = new Button("Start wave " + game.getNextWave());
 
         startRoundButton.setOnAction((ActionEvent e) -> {
+            game.startNextWave();
+            startRoundButton.setText("Start wave " + game.getNextWave());
+            startRoundButton.setDisable(true);
             new AnimationTimer() {
                 long previousTime = 0;
 
@@ -227,6 +228,10 @@ public class GraphicalUI extends Application {
                     }
                     previousTime = currentTime;
                     game.update();
+                    if(game.currentWaveFinished()) {
+                        this.stop();
+                        startRoundButton.setDisable(false);
+                    }
                 }
             }.start();
         });
@@ -334,7 +339,6 @@ public class GraphicalUI extends Application {
 
         BorderPane border = new BorderPane();
 
-//        this.sidepanel = new VBox();
         this.gameGrid = new GridPane();
         border.setCenter(this.gameGrid);
         this.sidepanel = initSidePanel();
@@ -342,11 +346,6 @@ public class GraphicalUI extends Application {
         this.sidepanel.setPrefWidth(SIDEBAR_WIDTH);
         RowConstraints fullHeight = new RowConstraints();
         fullHeight.setPercentHeight(100);
-//        Label rightLabel = new Label("Right!");
-//        this.sidepanel.getChildren().add(initSidePanel());
-//        this.sidepanel.setAlignment(Pos.TOP_CENTER);
-//        this.sidepanel.setSpacing(5);
-//        this.sidepanel.setBackground(new Background(new BackgroundFill(Color.CORAL, CornerRadii.EMPTY, Insets.EMPTY)));
 
         for (int i = 0; i < mapHeight; i++) {
             RowConstraints row = new RowConstraints();
@@ -371,7 +370,6 @@ public class GraphicalUI extends Application {
             }
         }
 
-        //this.gameGrid.setGridLinesVisible(true);
         Scene gameScene = new Scene(border, width, height);
 
         return gameScene;
