@@ -16,10 +16,12 @@ import fi.towerdefencegamesinc.towerdefence.java.logic.tower.Tower;
 import java.util.List;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -39,13 +41,14 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -96,7 +99,8 @@ public class GraphicalUI extends Application {
         form.add(mapSelectionLabel, 0, 3);
         ComboBox mapSelectionField = new ComboBox();
         form.add(mapSelectionField, 1, 3);
-        mapSelectionField.getItems().addAll(GameMap.mapFiles());
+        mapSelectionField.getItems().addAll(GameMap.DEFAULT_MAPS);
+        mapSelectionField.getItems().addAll(GameMap.externalMapFiles());
         mapSelectionField.getSelectionModel().selectFirst();
 
         Label difficultySelectionLabel = new Label("Select difficulty: ");
@@ -120,7 +124,16 @@ public class GraphicalUI extends Application {
         primaryStage.show();
 
         startButton.setOnAction((ActionEvent t) -> {
-            this.game = createGame(mapSelectionField.getValue().toString(), nameField.getText(), difficultySelectionField.getValue());
+            boolean external = false;
+            String mapFileName = mapSelectionField.getValue().toString();
+            if (mapFileName.startsWith(GameMap.EXTERNAL_MAP_PREFIX)) {
+                external = true;
+                mapFileName = mapFileName.substring(GameMap.EXTERNAL_MAP_PREFIX.length());
+                System.out.println(mapFileName);
+                
+            }
+                this.game = createGame(mapFileName, nameField.getText(), difficultySelectionField.getValue(), external);
+            
             primaryStage.setScene(createGameScene(visualBounds));
 
             new AnimationTimer() {
@@ -135,6 +148,26 @@ public class GraphicalUI extends Application {
                     if (selectedTile != null) {
                         tileStatus.set(selectedTile.toString());
                     }
+                    
+                    if(game.gameOver()) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("TowerDefence");
+                        alert.setHeaderText("Game Over - You Lost!");
+                        alert.setContentText("Restart game to start a new game.");
+                        alert.show();
+                        
+                        this.stop();
+                    }
+                    
+                    if(game.gameWon()) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("TowerDefence");
+                        alert.setHeaderText("Game Over - You Won!");
+                        alert.setContentText("Restart game to start a new game.");
+                        alert.show();
+                        
+                        this.stop();
+                    }
 
                 }
             }.start();
@@ -145,13 +178,11 @@ public class GraphicalUI extends Application {
 
                 @Override
                 public void handle(long currentTime) {
-                    Tile[][] tiles = game.getMap().getTiles();
                     gameGrid.getChildren().stream().forEach((Node node) -> {
                         Integer row = GridPane.getRowIndex(node);
                         Integer col = GridPane.getColumnIndex(node);
                         if (row == null || col == null) {
                         }
-                        //System.out.println(row + ", " + col + " : " + node);
                         Tile tile = game.getMap().getTile(GridPane.getRowIndex(node), GridPane.getColumnIndex(node));
                         Pane current = (Pane) node;
                         if (current.getBorder() != null && !current.equals(selectedGridTile)) {
@@ -161,7 +192,7 @@ public class GraphicalUI extends Application {
                         current.getChildren().add(createAttackerNode(tile.getAttackers()));
                         Tower t = tile.getTower();
                         if (t != null) {
-                            current.getChildren().add(createTowerNode(t));
+                            current.getChildren().add(createTowerNode(t, current));
                         }
                     });
 
@@ -171,22 +202,50 @@ public class GraphicalUI extends Application {
 
     }
 
-    public Game createGame(String mapFileName, String playerName, Difficulty difficulty) {
-        Game newGame = new Game(mapFileName, playerName, difficulty);
+    public Game createGame(String mapFileName, String playerName, Difficulty difficulty, boolean external) {
+        Game newGame = new Game(mapFileName, playerName, difficulty, external);
         return newGame;
     }
 
     public Node createAttackerNode(List<Attacker> attackers) {
 
-        Pane tile = new TilePane();
+        FlowPane tile = new FlowPane(Orientation.VERTICAL);
+        tile.setAlignment(Pos.CENTER);
         attackers.stream().forEach((Attacker a) -> {
-            tile.getChildren().add(new Label("A"));
+            Label attackerLabel = new Label("A");
+            Color color = Color.GREEN;
+            System.out.println("HEALTHPCT: " + a.getHealthPct());
+            if(a.getHealthPct()<0.2) {
+                color = Color.RED;
+            } else if(a.getHealthPct()<0.4) {
+                color = Color.ORANGE;
+            } else if(a.getHealthPct()<0.6) {
+                color = Color.YELLOW;
+            } else if(a.getHealthPct()<0.8) {
+                color = Color.YELLOWGREEN;
+            }
+            attackerLabel.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
+            tile.getChildren().add(attackerLabel);
         });
         return tile;
     }
 
-    public Node createTowerNode(Tower t) {
-        return new Label("" + t.getCharRepr());
+    public Node createTowerNode(Tower t, Pane node) {
+        StackPane towerImage = new StackPane();
+        Circle towerBase = new Circle();
+        towerBase.radiusProperty().bind(Bindings.min(towerImage.widthProperty().divide(2), towerImage.heightProperty().divide(2)));
+        Color color;
+        switch(t.getCharRepr()) {
+            case 'B':   color = Color.CORNSILK;
+                        break;
+            case 'F':   color = Color.AQUA;
+                        break;
+            default:    color = Color.BLACK;
+        }
+        towerBase.setFill(color);
+        Text towerText = new Text(t.getCharRepr()+"");
+        towerImage.getChildren().addAll(towerBase, towerText);
+        return towerImage;
     }
 
     public void gameGridClick(int row, int col, Pane tile, MouseEvent e) {
@@ -228,7 +287,7 @@ public class GraphicalUI extends Application {
                     }
                     previousTime = currentTime;
                     game.update();
-                    if(game.currentWaveFinished()) {
+                    if (game.currentWaveFinished()) {
                         this.stop();
                         startRoundButton.setDisable(false);
                     }
@@ -357,7 +416,9 @@ public class GraphicalUI extends Application {
                     col.setPercentWidth(100.0 / (mapWidth));
                     this.gameGrid.getColumnConstraints().add(col);
                 }
-                Pane tile = new StackPane();
+                StackPane tile = new StackPane();
+                tile.setAlignment(Pos.CENTER);
+
                 final int rowIndex = i;
                 final int colIndex = j;
                 tile.setOnMouseClicked((MouseEvent e) -> {

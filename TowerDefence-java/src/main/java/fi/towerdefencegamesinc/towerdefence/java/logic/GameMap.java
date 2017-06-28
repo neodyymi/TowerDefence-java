@@ -7,14 +7,21 @@ package fi.towerdefencegamesinc.towerdefence.java.logic;
 
 import fi.towerdefencegamesinc.towerdefence.java.logic.attacker.Attacker;
 import fi.towerdefencegamesinc.towerdefence.java.logic.tower.Tower;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -28,8 +35,10 @@ public class GameMap {
     private Tile[][] tiles;
     private ScoreBoard scoreBoard;
     private List<Tile> spawns;
-    
+
     private static final String MAPS_PATH = "./maps/";
+    public static final List<String> DEFAULT_MAPS = Arrays.asList("samplemap1(15x17).map", "samplemap2(11x13).map");
+    public static final String EXTERNAL_MAP_PREFIX = "Ext: ";
 
     /**
      * Create a new Map object with given width and height.
@@ -55,10 +64,38 @@ public class GameMap {
      * Read information from a file to generate a map.
      *
      * @param fileName File to read map information from.
+     * @param external
      * @return Generated map object.
      */
-    public static GameMap loadMapFromFile(String fileName) {
+    public static GameMap loadMapFromFile(String fileName, boolean external) {
         char[][] tmpTiles;
+        if (external) {
+            try (Stream<String> stream = Files.lines(Paths.get(MAPS_PATH + fileName))) {
+                tmpTiles = stream.map(s -> s.toCharArray()).toArray(char[][]::new);
+            } catch (IOException e) {
+                e.printStackTrace(System.out);
+                return null;
+            }
+        } else {
+            try (InputStream is = GameMap.class.getClassLoader().getResourceAsStream(MAPS_PATH + fileName);
+                    final Reader r = new InputStreamReader(is, StandardCharsets.UTF_8);
+                    final BufferedReader br = new BufferedReader(r);
+                    final Stream<String> stream = br.lines()) {
+                tmpTiles = stream.map(s -> s.toCharArray()).toArray(char[][]::new);
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace(System.out);
+                return null;
+            }
+        }
+        GameMap map = loadMapFromCharArray(tmpTiles);
+
+        return map;
+    }
+
+    public static GameMap loadMapFromExternalFile(String fileName) {
+        char[][] tmpTiles;
+
         try (Stream<String> stream = Files.lines(Paths.get(MAPS_PATH + fileName))) {
             tmpTiles = stream.map(s -> s.toCharArray()).toArray(char[][]::new);
         } catch (IOException e) {
@@ -253,10 +290,16 @@ public class GameMap {
         return this.tiles.length;
     }
 
-    public static ArrayList<String> mapFiles() throws IOException {
+    public static List<String> externalMapFiles() throws IOException {
+        if (!Files.isDirectory(Paths.get(MAPS_PATH))) {
+            return new ArrayList<>();
+        }
         File dir = new File(MAPS_PATH);
+        if (!dir.exists() || !dir.isDirectory()) {
+            return null;
+        }
         ArrayList<String> files = new ArrayList(Arrays.asList(dir.list((d, name) -> name.endsWith(".map"))));
 
-        return files;
+        return files.stream().map(m -> EXTERNAL_MAP_PREFIX+m).collect(Collectors.toList());
     }
 }

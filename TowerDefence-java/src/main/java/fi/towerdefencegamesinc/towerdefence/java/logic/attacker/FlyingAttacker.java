@@ -14,6 +14,9 @@ import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
  * @author vrsaari
  */
 public class FlyingAttacker extends BasicAttacker {
+    
+    private static final int DEFAULT_LOOT = 200;
+    private static final int DEFAULT_HEALTH = 100;
 
     /**
      * Creates a flying attacker.
@@ -22,9 +25,10 @@ public class FlyingAttacker extends BasicAttacker {
      * @param speed The base speed of the attacker.
      * @param damage The base damage of the attacker.
      * @param health Base hitpoints for the attacker.
+     * @param loot Amount of currency player gets for killing this attacker.
      */
-    public FlyingAttacker(Tile spawnLocation, int speed, int damage, int health) {
-        super(spawnLocation, speed, damage, true, health);
+    public FlyingAttacker(Tile spawnLocation, int speed, int damage, int health, int loot) {
+        super(spawnLocation, speed, damage, true, health, loot);
     }
 
     /**
@@ -35,6 +39,6 @@ public class FlyingAttacker extends BasicAttacker {
      * @param damage The base damage of the attacker.
      */
     public FlyingAttacker(Tile spawnLocation, int speed, int damage) {
-        super(spawnLocation, speed, damage, true, 100);
+        super(spawnLocation, speed, damage, true, DEFAULT_HEALTH, DEFAULT_LOOT);
     }
 }

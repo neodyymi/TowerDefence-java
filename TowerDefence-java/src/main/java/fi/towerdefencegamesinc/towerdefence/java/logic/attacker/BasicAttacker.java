@@ -26,12 +26,18 @@ public class BasicAttacker implements Attacker {
     private boolean flying;
     private int health;
     private final int baseHealth;
-    
+
     private Tile current;
     private Tile previous;
     private double movementsLeft;
     private final double baseSpeed;
     private final int baseDamage;
+    private int loot;
+
+    private static final int DEFAULT_LOOT = 100;
+    private static final int DEFAULT_HEALTH = 100;
+    private static final int DEFAULT_DAMAGE = 1;
+    private static final double DEFAULT_SPEED = 0.5;
 
     /**
      * Creates an attacker.
@@ -41,8 +47,9 @@ public class BasicAttacker implements Attacker {
      * @param damage The base damage for the attacker.
      * @param flying Does the attacker fly?
      * @param health Base hitpoints for the attacker.
+     * @param loot Amount of currency player gets for killing this attacker.
      */
-    public BasicAttacker(Tile spawnLocation, double speed, int damage, boolean flying, int health) {
+    public BasicAttacker(Tile spawnLocation, double speed, int damage, boolean flying, int health, int loot) {
         this.speed = speed;
         this.baseSpeed = speed;
         this.damage = damage;
@@ -51,11 +58,13 @@ public class BasicAttacker implements Attacker {
         this.health = health;
         this.baseHealth = health;
         this.movementsLeft = 0;
-        
+
         this.previous = null;
         this.current = spawnLocation;
 
         this.modifiers = new HashSet();
+
+        this.loot = loot;
     }
 
     /**
@@ -67,7 +76,7 @@ public class BasicAttacker implements Attacker {
      * @param flying Does the attacker fly?
      */
     public BasicAttacker(Tile spawnLocation, double speed, int damage, boolean flying) {
-        this(spawnLocation, speed, damage, flying, 100);
+        this(spawnLocation, speed, damage, flying, DEFAULT_HEALTH, DEFAULT_LOOT);
 
         this.modifiers = new HashSet();
     }
@@ -80,22 +89,22 @@ public class BasicAttacker implements Attacker {
      * @param damage The base damage for the attacker.
      */
     public BasicAttacker(Tile spawnLocation, double speed, int damage) {
-        this(spawnLocation, speed, damage, false, 100);
+        this(spawnLocation, speed, damage, false);
     }
-    
+
     public BasicAttacker(Tile spawnLocation) {
-        this(spawnLocation, 0.5, 1);
+        this(spawnLocation, DEFAULT_SPEED, DEFAULT_DAMAGE);
     }
 
     @Override
     public void move() {
-        if(this.current.isBase()) {
+        if (this.current.isBase()) {
             return;
         }
         this.movementsLeft += this.speed;
-        while(this.movementsLeft >= 1) {
+        while (this.movementsLeft >= 1) {
             Tile next = this.current.nextRoad(this.previous);
-            if(next != null) {
+            if (next != null) {
                 this.current.removeAttacker(this);
                 this.previous = this.current;
                 this.current = next;
@@ -166,13 +175,13 @@ public class BasicAttacker implements Attacker {
 
     @Override
     public Tile getTile() {
-        return this.current;    
+        return this.current;
     }
 
     @Override
     public void takeDamage(int amount) {
         this.health -= amount;
-        if(this.isDead()) {
+        if (this.isDead()) {
             this.current.removeAttacker(this);
             System.out.println("Attacker in " + this.getTile().getLocation().toString() + " is dead.");
         }
@@ -181,6 +190,21 @@ public class BasicAttacker implements Attacker {
     @Override
     public boolean isDead() {
         return this.health <= 0;
+    }
+
+    @Override
+    public int loot() {
+        if (!isDead()) {
+            return 0;
+        }
+        int looted = this.loot;
+        this.loot = 0;
+        return looted;
+    }
+
+    @Override
+    public double getHealthPct() {
+        return (double) this.health/this.baseHealth;
     }
 
 }

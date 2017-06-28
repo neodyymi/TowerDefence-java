@@ -30,15 +30,21 @@ public class Game {
     private int nextWave;
     private int spawnedCurrentWave;
     private boolean currentWaveFinished;
+    private boolean gameOver;
+    private boolean gameWon;
 
-    public Game(String mapFile, String playerName, Difficulty difficulty) {
+    public Game(String mapFile, String playerName, Difficulty difficulty, boolean external) {
         int startCurrency = 1000 - difficulty.getDifficulty() * 250;
-        this.map = GameMap.loadMapFromFile(mapFile);
+        this.map = GameMap.loadMapFromFile(mapFile, external);
         this.player = new Player(playerName, startCurrency);
         this.score = 0;
         this.nextWave = 0;
         this.spawnedCurrentWave = 0;
         this.wavesOfAttackers = new int[]{5,10,15,20,25};
+    }
+    
+    public Game(String mapFile, String playerName, Difficulty difficulty) {
+        this(mapFile, playerName, difficulty, false);
     }
 
     public int getScore() {
@@ -59,6 +65,8 @@ public class Game {
 
     public void update() {
         if (player.gameOver()) {
+            this.gameOver = true;
+            this.gameWon = false;
             System.out.println("------------\n\n\n\n\n\nGAME OVER\n\n\n\n\n\n------------");
             return;
         }
@@ -82,6 +90,9 @@ public class Game {
             if (target != null) {
                 System.out.println("shooting at target");
                 tower.shoot(target);
+                if(target.isDead()) {
+                    this.player.loot(target);
+                }
             } else {
                 System.out.println("Target is null");
             }
@@ -117,6 +128,14 @@ public class Game {
 
     public boolean currentWaveFinished() {
         return this.currentWaveFinished;
+    }
+    
+    public boolean gameOver() {
+        return this.gameOver;
+    }
+    
+    public boolean gameWon() {
+        return this.gameWon;
     }
 
 }

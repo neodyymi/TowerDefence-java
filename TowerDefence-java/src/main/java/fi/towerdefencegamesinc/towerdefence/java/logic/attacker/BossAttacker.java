@@ -12,8 +12,11 @@ import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
  *
  * @author vrsaari
  */
-public class BossAttacker extends BasicAttacker {
-
+public class BossAttacker extends BasicAttacker {    
+    
+    private static final int DEFAULT_LOOT = 1000;
+    private static final int DEFAULT_HEALTH = 1000;
+    
     /**
      * Creates a boss attacker.
      *
@@ -22,7 +25,7 @@ public class BossAttacker extends BasicAttacker {
      * @param damage The base damage of the boss attacker.
      */
     public BossAttacker(Tile spawnLocation, int speed, int damage) {
-        super(spawnLocation, speed, damage, false, 1000);
+        super(spawnLocation, speed, damage, false, DEFAULT_HEALTH, DEFAULT_LOOT);
     }
 
     /**
@@ -32,9 +35,10 @@ public class BossAttacker extends BasicAttacker {
      * @param speed The base speed of the boss attacker.
      * @param damage The base damage of the boss attacker.
      * @param health The base health for the boss attacker.
+     * @param loot Amount of currency player gets for killing this attacker.
      */
-    public BossAttacker(Tile spawnLocation, int speed, int damage, int health) {
-        super(spawnLocation, speed, damage, false, health);
+    public BossAttacker(Tile spawnLocation, int speed, int damage, int health, int loot) {
+        super(spawnLocation, speed, damage, false, health, loot);
     }
 
 }

@@ -83,5 +83,15 @@ public interface Attacker {
      */
     public boolean isDead();
     
+    /**
+     *
+     * @return Amount of loot gained from dead attacker.
+     */
+    public int loot();
     
+    /**
+     *
+     * @return Percentage of health left.
+     */
+    public double getHealthPct();
 }

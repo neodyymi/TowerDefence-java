@@ -5,6 +5,7 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java.logic;
 
+import fi.towerdefencegamesinc.towerdefence.java.logic.attacker.Attacker;
 import fi.towerdefencegamesinc.towerdefence.java.logic.tower.Tower;
 
 /**
@@ -107,5 +108,9 @@ public class Player {
         this.currency -= tower.getUpgradeCost();
         tower.upgrade();
         return true;
+    }
+
+    public void loot(Attacker target) {
+        this.currency += target.loot();
     }
 }

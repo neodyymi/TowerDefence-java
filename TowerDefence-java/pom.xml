@@ -21,6 +21,12 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -36,11 +42,9 @@
                 <version>1.1.8</version>
                 <configuration>
                     <targetClasses>
-                        <param>fi.towerdefencegamesinc.towerdefence.java.gui.*</param>
                         <param>fi.towerdefencegamesinc.towerdefence.java.logic.*</param>
                     </targetClasses>
                     <targetTests>
-                        <param>fi.towerdefencegamesinc.towerdefence.java.gui.*</param>
                         <param>fi.towerdefencegamesinc.towerdefence.java.logic.*</param>
                     </targetTests>
                 </configuration>
