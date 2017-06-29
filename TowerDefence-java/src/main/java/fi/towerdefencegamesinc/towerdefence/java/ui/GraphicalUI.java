@@ -276,7 +276,11 @@ public class GraphicalUI extends Application {
 
         startRoundButton.setOnAction((ActionEvent e) -> {
             game.startNextWave();
-            startRoundButton.setText("Start wave " + game.getNextWave());
+            if (game.getNextWave() == -1) {
+                startRoundButton.setText("This is the last wave.");
+            } else {
+                startRoundButton.setText("Start wave " + game.getNextWave());
+            }
             startRoundButton.setDisable(true);
             new AnimationTimer() {
                 long previousTime = 0;
@@ -290,7 +294,9 @@ public class GraphicalUI extends Application {
                     game.update();
                     if (game.currentWaveFinished()) {
                         this.stop();
-                        startRoundButton.setDisable(false);
+                        if (game.getNextWave() != -1) {
+                            startRoundButton.setDisable(false);
+                        }
                     }
                 }
             }.start();

@@ -49,7 +49,7 @@ public class Game {
         this.score = 0;
         this.nextWave = 0;
         this.spawnedCurrentWave = 0;
-        this.wavesOfAttackers = new int[]{5, 10, 15, 20, 25};
+        this.wavesOfAttackers = new int[]{5};
     }
 
     /**
@@ -65,6 +65,7 @@ public class Game {
 
     /**
      * Getter for score.
+     *
      * @return Returns current score for the game.
      */
     public int getScore() {
@@ -73,6 +74,7 @@ public class Game {
 
     /**
      * Setter for score.
+     *
      * @param score Integer to be set as score.
      */
     public void setScore(int score) {
@@ -81,6 +83,7 @@ public class Game {
 
     /**
      * Getter for player.
+     *
      * @return Returns the player playing the game.
      */
     public Player getPlayer() {
@@ -89,6 +92,7 @@ public class Game {
 
     /**
      * Getter for map.
+     *
      * @return Returns current map.
      */
     public GameMap getMap() {
@@ -99,12 +103,18 @@ public class Game {
      * This is a game updating method. It makes the game tick forwards one tick.
      */
     public void update() {
+        if (this.currentWaveFinished && this.getNextWave() == -1) {
+            this.gameWon = true;
+        }
         if (player.gameOver()) {
             this.gameOver = true;
-            this.gameWon = false;
+            if (player.getHealth() <= 0) {
+                this.gameWon = false;
+            }
             System.out.println("------------\n\n\n\n\n\nGAME OVER\n\n\n\n\n\n------------");
             return;
         }
+
         List<Attacker> attackers = map.getAllAttackers();
         List<Attacker> attackersInBase = attackers.stream()
                 .filter(x -> x.getTile().isBase()).collect(Collectors.toList());
@@ -141,6 +151,7 @@ public class Game {
 
     /**
      * Attempts to spawn an attacker at a random spawn.
+     *
      * @return True, if an attacker was spawned.
      */
     public boolean spawnAttacker() {
@@ -157,14 +168,20 @@ public class Game {
 
     /**
      * Getter for nextWave.
+     *
      * @return Returns number of next wave.
      */
     public int getNextWave() {
+        if (this.nextWave >= this.wavesOfAttackers.length) {
+            return -1;
+        }
         return this.nextWave;
     }
 
     /**
      * Begins a new wave.
+     *
+     * @return Can next wave be started?
      */
     public void startNextWave() {
         this.nextWave++;
@@ -174,6 +191,7 @@ public class Game {
 
     /**
      * Is current wave finished?
+     *
      * @return True if current wave is finished.
      */
     public boolean currentWaveFinished() {
@@ -182,6 +200,7 @@ public class Game {
 
     /**
      * Is the game over?
+     *
      * @return True if game is over.
      */
     public boolean gameOver() {
@@ -190,6 +209,7 @@ public class Game {
 
     /**
      * Has the player won?
+     *
      * @return True if player has beat the game.
      */
     public boolean gameWon() {
