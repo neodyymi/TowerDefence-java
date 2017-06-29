@@ -49,7 +49,7 @@ public class Game {
         this.score = 0;
         this.nextWave = 0;
         this.spawnedCurrentWave = 0;
-        this.wavesOfAttackers = new int[]{5};
+        this.wavesOfAttackers = new int[]{5, 10, 15, 20, 25, 35, 50, 70};
     }
 
     /**
