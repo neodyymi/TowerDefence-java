@@ -49,7 +49,7 @@ public class Game {
         this.score = 0;
         this.nextWave = 0;
         this.spawnedCurrentWave = 0;
-        this.wavesOfAttackers = new int[]{5, 10, 15, 20, 25, 35, 50, 70};
+        this.wavesOfAttackers = new int[]{5,10,20,30,50,70,100};
     }
 
     /**
@@ -103,9 +103,7 @@ public class Game {
      * This is a game updating method. It makes the game tick forwards one tick.
      */
     public void update() {
-        if (this.currentWaveFinished && this.getNextWave() == -1) {
-            this.gameWon = true;
-        }
+        
         if (player.gameOver()) {
             this.gameOver = true;
             if (player.getHealth() <= 0) {
@@ -142,10 +140,14 @@ public class Game {
                 System.out.println("Target is null");
             }
         });
-        if (new Random().nextInt(3) == 0) {
+        if (new Random().nextInt(2) == 0) {
             if (!this.spawnAttacker() && this.getMap().getAllAttackers().isEmpty()) {
                 this.currentWaveFinished = true;
             }
+        }
+        if (this.currentWaveFinished && this.getNextWave() == -1) {
+            System.out.println("WON!");
+            this.gameWon = true;
         }
     }
 
