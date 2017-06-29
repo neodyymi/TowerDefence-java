@@ -72,12 +72,13 @@ public class MapTest {
      * Test of reading a file into a map
      */
     @Test
-    public void testReadMapFromFile() {
+    public void testReadExternalMapFromFile() {
         char[][] tmpTiles = {
             {'X', ' ', ' ', '#'},
             {'#', '@', ' ', '@'},
             {'#', '@', ' ', '@'},
-            {'#', '@', ' ', '#'}
+            {'#', '@', ' ', '$'},
+            {'#', '#', '#', '#'}
         };
 
         File tmpF;
@@ -86,19 +87,32 @@ public class MapTest {
             sb.append(new String(chars));
             sb.append("\n");
         });
+        sb.append("\n");
 
-        try {
-            tmpF = File.createTempFile("test", "file");
-            try (FileWriter fw = new FileWriter(tmpF)) {
-                fw.append(sb);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(MapTest.class.getName()).log(Level.SEVERE, null, ex);
-            fail("Failed to create temporary file for test");
-            return;
-        }
-        GameMap testMap = GameMap.loadMapFromFile(tmpF.getPath());
-        tmpF.deleteOnExit();
+        
+        GameMap testMap = GameMap.loadMapFromFile("testMap", true);
         assertEquals(testMap.toString(), sb.toString());
     }
+
+    @Test
+    public void testReadMapFromFile() {
+        char[][] tmpTiles = {
+            {'#', '#', '#'},
+            {'X', ' ', '$'},
+            {'@', '@', '@'},
+        };
+
+        File tmpF;
+        StringBuilder sb = new StringBuilder();
+        Stream.of(tmpTiles).forEach(chars -> {
+            sb.append(new String(chars));
+            sb.append("\n");
+        });
+        sb.append("\n");
+
+        
+        GameMap testMap = GameMap.loadMapFromFile("testMap1", false);
+        assertEquals(testMap.toString(), sb.toString());
+    }
+
 }

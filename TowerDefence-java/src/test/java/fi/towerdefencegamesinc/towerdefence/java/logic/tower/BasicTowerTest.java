@@ -53,7 +53,7 @@ public class BasicTowerTest {
      */
     @Test
     public void testShoot() {
-        assertEquals(1, this.basicTower.shoot(this.attacker));
+        assertEquals(5, this.basicTower.shoot(this.attacker));
     }
 
     /**

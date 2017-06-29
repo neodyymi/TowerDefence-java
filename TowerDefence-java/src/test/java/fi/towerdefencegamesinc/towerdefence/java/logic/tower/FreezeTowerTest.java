@@ -51,7 +51,7 @@ public class FreezeTowerTest {
      */
     @Test
     public void testShoot() {
-        assertEquals(1, this.freezeTower.shoot(this.attacker));
+        assertEquals(5, this.freezeTower.shoot(this.attacker));
     }
 
     /**

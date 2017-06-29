@@ -7,7 +7,7 @@ package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
 
 import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
 import fi.towerdefencegamesinc.towerdefence.java.logic.Type;
-import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.Modifier;
+import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.BasicModifier;
 import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.SlowModifier;
 import org.junit.After;
 import org.junit.AfterClass;
