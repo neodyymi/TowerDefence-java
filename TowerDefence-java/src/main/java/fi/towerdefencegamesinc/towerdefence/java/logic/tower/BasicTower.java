@@ -92,19 +92,15 @@ public class BasicTower implements Tower {
     @Override
     public int shoot(Attacker target) {
         if (!this.readyToShoot()) {
-            System.out.println(this.tile.getLocation().toString() + " tower is not ready.");
             return 0;
         }
         if (Location.getDistance(this.tile.getLocation(), target.getTile().getLocation()) > this.range) {
-            System.out.println(this.tile.getLocation().toString() + " tower not in range of any attacker.");
             return 0;
         }
         this.target = target;
         double damage = this.baseDamage * this.power * (this.level + 1);
         this.target.takeDamage((int) damage);
         this.lastShot = new Date().getTime();
-        System.out.println(this.tile.getLocation().toString() + " tower shot "
-                + target.toString() + " for " + damage + " damage.");
         return (int) damage;
     }
 

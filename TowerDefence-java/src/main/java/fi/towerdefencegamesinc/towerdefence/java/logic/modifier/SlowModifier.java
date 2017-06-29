@@ -20,7 +20,7 @@ public class SlowModifier extends BasicModifier {
      * @param strength The strength of the modifier.
      */
     public SlowModifier(Long duration, String name, int strength) {
-        super(duration, name, strength / 100);
+        super(duration, name, strength);
     }
 
     /**
@@ -30,7 +30,7 @@ public class SlowModifier extends BasicModifier {
      * @param strength The strength of the modifier.
      */
     public SlowModifier(Long duration, int strength) {
-        super(duration, "Slowness", strength / 100);
+        super(duration, "Slowness", strength);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class SlowModifier extends BasicModifier {
         int seconds = (int) ((this.getDurationLeft() / (1000)) % 60);
         StringBuilder sb = new StringBuilder();
         sb.append(minutes).append(":").append(seconds).append(" ").append(super.getName())
-                .append("(").append(super.getStrength() * 100).append("%)");
+                .append("(").append(super.getStrength()).append("%)");
         return sb.toString();
     }
 

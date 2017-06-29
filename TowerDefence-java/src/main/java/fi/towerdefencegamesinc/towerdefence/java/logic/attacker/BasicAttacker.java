@@ -147,8 +147,8 @@ public class BasicAttacker implements Attacker {
     }
 
     @Override
-    public int getSpeed() {
-        return (int) this.speed;
+    public double getSpeed() {
+        return this.speed;
     }
 
     @Override
@@ -160,12 +160,13 @@ public class BasicAttacker implements Attacker {
         }
         String modString = "none";
         if (!this.modifiers.isEmpty()) {
-            List<BasicModifier> modList = new ArrayList(this.modifiers);
+            List<BasicModifier> modList = getModifiers();
             StringBuilder mods = new StringBuilder(modList.get(0).toString());
             modList.stream().skip(1).forEach(x -> {
                 mods.append(", ");
                 mods.append(x.toString());
             });
+            modString = mods.toString();
 
         }
         sb.append("Basic ")
@@ -188,7 +189,6 @@ public class BasicAttacker implements Attacker {
         this.health -= amount;
         if (this.isDead()) {
             this.current.removeAttacker(this);
-            System.out.println("Attacker in " + this.getTile().getLocation().toString() + " is dead.");
         }
     }
 
@@ -211,5 +211,12 @@ public class BasicAttacker implements Attacker {
     public double getHealthPct() {
         return (double) this.health / this.baseHealth;
     }
+
+    @Override
+    public int getHealth() {
+        return health;
+    }
+    
+    
 
 }

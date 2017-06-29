@@ -60,7 +60,7 @@ public interface Attacker {
      *
      * @return The speed of the attacker.
      */
-    public int getSpeed();
+    public double getSpeed();
 
     @Override
     public String toString();
@@ -99,4 +99,10 @@ public interface Attacker {
      * @return Percentage of health left.
      */
     public double getHealthPct();
+    
+    /**
+     * Getter for health.
+     * @return Current health of attacker.
+     */
+    public int getHealth();
 }

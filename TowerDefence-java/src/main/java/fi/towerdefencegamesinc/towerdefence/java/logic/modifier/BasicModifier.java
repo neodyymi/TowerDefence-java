@@ -62,7 +62,7 @@ public abstract class BasicModifier implements Modifier {
     /**
      * Update stats of the attacker the modifier is attached to.
      *
-     * @param attacker
+     * @param attacker Attacker to update modifier on.
      */
     @Override
     public void update(Attacker attacker) {
