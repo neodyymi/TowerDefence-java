@@ -25,8 +25,8 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2017</copyright>
     <item>
-      <title>File: 27,
-             Errors: 97,
+      <title>File: 30,
+             Errors: 39,
              Warnings: 0,
              Infos: 0
       </title>
@@ -46,6 +46,20 @@ under the License.
           <tbody>
                           <tr>
                 <td>
+                  <a href="${project.url}/checkstyle.html#fi.towerdefencegamesinc.towerdefence.java.logic.modifier.BasicModifier.java">fi/towerdefencegamesinc/towerdefence/java/logic/modifier/BasicModifier.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="${project.url}/checkstyle.html#fi.towerdefencegamesinc.towerdefence.java.Game.java">fi/towerdefencegamesinc/towerdefence/java/Game.java</a>
                 </td>
                 <td>
@@ -55,7 +69,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  4
+                  0
                 </td>
               </tr>
                           <tr>
@@ -69,7 +83,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  8
+                  2
                 </td>
               </tr>
                           <tr>
@@ -83,12 +97,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  3
+                  0
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#fi.towerdefencegamesinc.towerdefence.java.ui.Action.HelpCommand.java">fi/towerdefencegamesinc/towerdefence/java/ui/Action/HelpCommand.java</a>
+                  <a href="${project.url}/checkstyle.html#fi.towerdefencegamesinc.towerdefence.java.logic.Difficulty.java">fi/towerdefencegamesinc/towerdefence/java/logic/Difficulty.java</a>
                 </td>
                 <td>
                   0
@@ -97,21 +111,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  3
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#fi.towerdefencegamesinc.towerdefence.java.ui.Action.ScoreCommand.java">fi/towerdefencegamesinc/towerdefence/java/ui/Action/ScoreCommand.java</a>
-                </td>
-                <td>
                   0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  2
                 </td>
               </tr>
                           <tr>
@@ -130,7 +130,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#fi.towerdefencegamesinc.towerdefence.java.ui.Action.ContinueCommand.java">fi/towerdefencegamesinc/towerdefence/java/ui/Action/ContinueCommand.java</a>
+                  <a href="${project.url}/checkstyle.html#fi.towerdefencegamesinc.towerdefence.java.ui.action.ContinueCommand.java">fi/towerdefencegamesinc/towerdefence/java/ui/action/ContinueCommand.java</a>
                 </td>
                 <td>
                   0
@@ -139,21 +139,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#fi.towerdefencegamesinc.towerdefence.java.ui.Action.TowerCommand.java">fi/towerdefencegamesinc/towerdefence/java/ui/Action/TowerCommand.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  5
+                  1
                 </td>
               </tr>
                           <tr>
@@ -168,6 +154,34 @@ under the License.
                 </td>
                 <td>
                   0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.towerdefencegamesinc.towerdefence.java.ui.action.Action.java">fi/towerdefencegamesinc/towerdefence/java/ui/action/Action.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.towerdefencegamesinc.towerdefence.java.ui.GraphicalUI.java">fi/towerdefencegamesinc/towerdefence/java/ui/GraphicalUI.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  11
                 </td>
               </tr>
                           <tr>
@@ -195,7 +209,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  6
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.towerdefencegamesinc.towerdefence.java.ui.action.HelpCommand.java">fi/towerdefencegamesinc/towerdefence/java/ui/action/HelpCommand.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
                 </td>
               </tr>
                           <tr>
@@ -223,7 +251,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  5
+                  0
                 </td>
               </tr>
                           <tr>
@@ -237,7 +265,21 @@ under the License.
                   0
                 </td>
                 <td>
-                  3
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.towerdefencegamesinc.towerdefence.java.ui.action.ScoreCommand.java">fi/towerdefencegamesinc/towerdefence/java/ui/action/ScoreCommand.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
                 </td>
               </tr>
                           <tr>
@@ -251,7 +293,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  3
+                  0
                 </td>
               </tr>
                           <tr>
@@ -279,21 +321,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  5
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#fi.towerdefencegamesinc.towerdefence.java.ui.Action.Action.java">fi/towerdefencegamesinc/towerdefence/java/ui/Action/Action.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  3
+                  1
                 </td>
               </tr>
                           <tr>
@@ -307,7 +335,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  2
+                  0
                 </td>
               </tr>
                           <tr>
@@ -321,7 +349,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  4
+                  0
                 </td>
               </tr>
                           <tr>
@@ -335,7 +363,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  4
+                  0
                 </td>
               </tr>
                           <tr>
@@ -349,7 +377,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  3
+                  0
                 </td>
               </tr>
                           <tr>
@@ -363,7 +391,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  13
+                  2
                 </td>
               </tr>
                           <tr>
@@ -377,7 +405,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  5
+                  0
                 </td>
               </tr>
                           <tr>
@@ -392,6 +420,20 @@ under the License.
                 </td>
                 <td>
                   8
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.towerdefencegamesinc.towerdefence.java.ui.action.TowerCommand.java">fi/towerdefencegamesinc/towerdefence/java/ui/action/TowerCommand.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
                 </td>
               </tr>
                           <tr>

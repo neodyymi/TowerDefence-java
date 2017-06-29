@@ -10,3 +10,9 @@ Päivä | Tunnit | Kuvaus
 08.06.2017 | 6h | Koodia ja javadocseja.
 13.06.2017 | 2h | Koodia...
 14.06.2017 | 10h | Jonkinlaisen näkymän luomista demoa varten...
+15.06.2017 | 3h | Checkstyle jne..
+23.06.2017 | 4h | Jotain..
+26.06.2017 | 2h | GUI
+27.06.2017 | 6h | GUI
+28.06.2017 | 8h | GUI
+29.06.2017 | 10h| Dokumentaatio/Checkstyle/testit
