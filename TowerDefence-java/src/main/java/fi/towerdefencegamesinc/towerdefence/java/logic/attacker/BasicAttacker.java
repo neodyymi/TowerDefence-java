@@ -92,6 +92,11 @@ public class BasicAttacker implements Attacker {
         this(spawnLocation, speed, damage, false);
     }
 
+    /**
+     * Simplified constructor for a non-flying attacker.
+     *
+     * @param spawnLocation The location the attacker spawned in.
+     */
     public BasicAttacker(Tile spawnLocation) {
         this(spawnLocation, DEFAULT_SPEED, DEFAULT_DAMAGE);
     }
@@ -204,7 +209,7 @@ public class BasicAttacker implements Attacker {
 
     @Override
     public double getHealthPct() {
-        return (double) this.health/this.baseHealth;
+        return (double) this.health / this.baseHealth;
     }
 
 }

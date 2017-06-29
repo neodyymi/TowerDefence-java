@@ -18,7 +18,7 @@ public interface Attacker {
 
     /**
      * Move the attacker as it is designed to.
-     * @param start The tile the movement starts in.
+     *
      */
     public void move();
 
@@ -64,32 +64,37 @@ public interface Attacker {
 
     @Override
     public String toString();
-    
+
     /**
+     * Where is the attacker located at?
      *
      * @return The tile the attacker is currently located in.
      */
     public Tile getTile();
-    
+
     /**
      * Inform the attacker it has been hit with an amount of damage.
+     *
      * @param amount Amount of damage taken.
      */
     public void takeDamage(int amount);
-    
+
     /**
+     * Is the attacker dead?
      *
      * @return True if the attacker is dead.
      */
     public boolean isDead();
-    
+
     /**
+     * Attempt to loot the attacker.
      *
      * @return Amount of loot gained from dead attacker.
      */
     public int loot();
-    
+
     /**
+     * Get percentage of health left.
      *
      * @return Percentage of health left.
      */

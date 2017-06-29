@@ -24,19 +24,16 @@ public abstract class BasicModifier implements Modifier {
      * Creates a new modifier.
      *
      * @param duration The duration of the modifier in milliseconds.
-     * @param name
-     * @param strength
+     * @param name The name of the modifier.
+     * @param strength The strength of the modifier.
      */
     public BasicModifier(Long duration, String name, int strength) {
         this.startTime = new Date();
         this.duration = duration;
         this.strength = strength;
+        this.name = name;
     }
 
-    /**
-     *
-     * @return Duration left on the modifier in milliseconds.
-     */
     @Override
     public Long getDurationLeft() {
         return duration - (this.startTime.getTime() - new Date().getTime());
@@ -76,7 +73,7 @@ public abstract class BasicModifier implements Modifier {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     @Override
     public String getName() {
         return this.name;

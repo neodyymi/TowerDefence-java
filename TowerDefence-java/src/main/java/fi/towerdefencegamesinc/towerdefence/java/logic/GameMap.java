@@ -36,7 +36,7 @@ public class GameMap {
     private ScoreBoard scoreBoard;
     private List<Tile> spawns;
 
-    private static final String MAPS_PATH = "./maps/";
+    private static final String MAPS_PATH = "maps/";
     public static final List<String> DEFAULT_MAPS = Arrays.asList("samplemap1(15x17).map", "samplemap2(11x13).map");
     public static final String EXTERNAL_MAP_PREFIX = "Ext: ";
 
@@ -64,7 +64,7 @@ public class GameMap {
      * Read information from a file to generate a map.
      *
      * @param fileName File to read map information from.
-     * @param external
+     * @param external Is the map file an external file?
      * @return Generated map object.
      */
     public static GameMap loadMapFromFile(String fileName, boolean external) {
@@ -87,20 +87,6 @@ public class GameMap {
                 e.printStackTrace(System.out);
                 return null;
             }
-        }
-        GameMap map = loadMapFromCharArray(tmpTiles);
-
-        return map;
-    }
-
-    public static GameMap loadMapFromExternalFile(String fileName) {
-        char[][] tmpTiles;
-
-        try (Stream<String> stream = Files.lines(Paths.get(MAPS_PATH + fileName))) {
-            tmpTiles = stream.map(s -> s.toCharArray()).toArray(char[][]::new);
-        } catch (IOException e) {
-            e.printStackTrace(System.out);
-            return null;
         }
         GameMap map = loadMapFromCharArray(tmpTiles);
 
@@ -208,6 +194,7 @@ public class GameMap {
     }
 
     /**
+     * Getter for scoreBoard.
      *
      * @return The scoreboard for the map.
      */
@@ -216,6 +203,7 @@ public class GameMap {
     }
 
     /**
+     * Getter for getting tile from certain coordinates.
      *
      * @param x x-coordinate for a tile on the map.
      * @param y y-coordinate for a tile on the map.
@@ -226,6 +214,7 @@ public class GameMap {
     }
 
     /**
+     * Setter for setting a tile into certain coordinates.
      *
      * @param x x-coordinate for a tile on the map.
      * @param y y-coordinate for a tile on the map.
@@ -235,10 +224,20 @@ public class GameMap {
         this.tiles[x][y] = t;
     }
 
+    /**
+     * Setter for tiles.
+     *
+     * @param tiles Array of tiles to replace current tiles.
+     */
     public void setTiles(Tile[][] tiles) {
         this.tiles = tiles;
     }
 
+    /**
+     * Getter for tiles.
+     *
+     * @return 2d array of tiles.
+     */
     public Tile[][] getTiles() {
         return tiles;
     }
@@ -253,6 +252,11 @@ public class GameMap {
         return this.spawns.get(new Random().nextInt(this.spawns.size()));
     }
 
+    /**
+     * List all attackers in map.
+     *
+     * @return List of attackers.
+     */
     public List<Attacker> getAllAttackers() {
         List<Attacker> attackers = new ArrayList();
         Arrays.stream(this.tiles).forEach(row -> Arrays.stream(row).forEach(t -> {
@@ -261,6 +265,11 @@ public class GameMap {
         return attackers;
     }
 
+    /**
+     * List all towers in map.
+     *
+     * @return List of towers.
+     */
     public List<Tower> getAllTowers() {
         List<Tower> towers = new ArrayList();
         Arrays.stream(this.tiles).forEach(row -> Arrays.stream(row).forEach(t -> {
@@ -272,24 +281,50 @@ public class GameMap {
         return towers;
     }
 
+    /**
+     * Remove multiple attackers.
+     *
+     * @param attackers List of attackers to be removed.
+     */
     public void removeAttackers(List<Attacker> attackers) {
         attackers.stream().forEach(a -> {
             a.getTile().removeAttacker(a);
         });
     }
 
+    /**
+     * Add a tile into the list of spawnlocations.
+     *
+     * @param tile Tile to be added.
+     */
     public void addSpawn(Tile tile) {
         this.spawns.add(tile);
     }
 
+    /**
+     * Find out the width of the map.
+     *
+     * @return Width of the map.
+     */
     public int getWidth() {
         return this.tiles[0].length;
     }
 
+    /**
+     * Find out the height of the map.
+     *
+     * @return Height of the map.
+     */
     public int getHeight() {
         return this.tiles.length;
     }
 
+    /**
+     * What external map files are available in the /maps/ folder.
+     *
+     * @return List of external maps available.
+     * @throws IOException
+     */
     public static List<String> externalMapFiles() throws IOException {
         if (!Files.isDirectory(Paths.get(MAPS_PATH))) {
             return new ArrayList<>();
@@ -300,6 +335,6 @@ public class GameMap {
         }
         ArrayList<String> files = new ArrayList(Arrays.asList(dir.list((d, name) -> name.endsWith(".map"))));
 
-        return files.stream().map(m -> EXTERNAL_MAP_PREFIX+m).collect(Collectors.toList());
+        return files.stream().map(m -> EXTERNAL_MAP_PREFIX + m).collect(Collectors.toList());
     }
 }

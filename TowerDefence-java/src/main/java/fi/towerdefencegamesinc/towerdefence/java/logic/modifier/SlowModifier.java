@@ -6,15 +6,29 @@
 package fi.towerdefencegamesinc.towerdefence.java.logic.modifier;
 
 /**
+ * Slow modifier applied on attackers.
  *
  * @author vrsaari
  */
 public class SlowModifier extends BasicModifier {
 
+    /**
+     * Create a slow modifier.
+     *
+     * @param duration The duration of the modifier.
+     * @param name The name of the modifier.
+     * @param strength The strength of the modifier.
+     */
     public SlowModifier(Long duration, String name, int strength) {
         super(duration, name, strength / 100);
     }
 
+    /**
+     * Create a slow modifier.
+     *
+     * @param duration The duration of the modifier.
+     * @param strength The strength of the modifier.
+     */
     public SlowModifier(Long duration, int strength) {
         super(duration, "Slowness", strength / 100);
     }

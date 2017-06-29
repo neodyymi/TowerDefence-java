@@ -130,10 +130,10 @@ public class GraphicalUI extends Application {
                 external = true;
                 mapFileName = mapFileName.substring(GameMap.EXTERNAL_MAP_PREFIX.length());
                 System.out.println(mapFileName);
-                
+
             }
-                this.game = createGame(mapFileName, nameField.getText(), difficultySelectionField.getValue(), external);
-            
+            this.game = createGame(mapFileName, nameField.getText(), difficultySelectionField.getValue(), external);
+
             primaryStage.setScene(createGameScene(visualBounds));
 
             new AnimationTimer() {
@@ -148,24 +148,24 @@ public class GraphicalUI extends Application {
                     if (selectedTile != null) {
                         tileStatus.set(selectedTile.toString());
                     }
-                    
-                    if(game.gameOver()) {
+
+                    if (game.gameOver()) {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("TowerDefence");
                         alert.setHeaderText("Game Over - You Lost!");
                         alert.setContentText("Restart game to start a new game.");
                         alert.show();
-                        
+
                         this.stop();
                     }
-                    
-                    if(game.gameWon()) {
+
+                    if (game.gameWon()) {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("TowerDefence");
                         alert.setHeaderText("Game Over - You Won!");
                         alert.setContentText("Restart game to start a new game.");
                         alert.show();
-                        
+
                         this.stop();
                     }
 
@@ -181,8 +181,6 @@ public class GraphicalUI extends Application {
                     gameGrid.getChildren().stream().forEach((Node node) -> {
                         Integer row = GridPane.getRowIndex(node);
                         Integer col = GridPane.getColumnIndex(node);
-                        if (row == null || col == null) {
-                        }
                         Tile tile = game.getMap().getTile(GridPane.getRowIndex(node), GridPane.getColumnIndex(node));
                         Pane current = (Pane) node;
                         if (current.getBorder() != null && !current.equals(selectedGridTile)) {
@@ -215,13 +213,13 @@ public class GraphicalUI extends Application {
             Label attackerLabel = new Label("A");
             Color color = Color.GREEN;
             System.out.println("HEALTHPCT: " + a.getHealthPct());
-            if(a.getHealthPct()<0.2) {
+            if (a.getHealthPct() < 0.2) {
                 color = Color.RED;
-            } else if(a.getHealthPct()<0.4) {
+            } else if (a.getHealthPct() < 0.4) {
                 color = Color.ORANGE;
-            } else if(a.getHealthPct()<0.6) {
+            } else if (a.getHealthPct() < 0.6) {
                 color = Color.YELLOW;
-            } else if(a.getHealthPct()<0.8) {
+            } else if (a.getHealthPct() < 0.8) {
                 color = Color.YELLOWGREEN;
             }
             attackerLabel.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -235,15 +233,18 @@ public class GraphicalUI extends Application {
         Circle towerBase = new Circle();
         towerBase.radiusProperty().bind(Bindings.min(towerImage.widthProperty().divide(2), towerImage.heightProperty().divide(2)));
         Color color;
-        switch(t.getCharRepr()) {
-            case 'B':   color = Color.CORNSILK;
-                        break;
-            case 'F':   color = Color.AQUA;
-                        break;
-            default:    color = Color.BLACK;
+        switch (t.getCharRepr()) {
+            case 'B':
+                color = Color.CORNSILK;
+                break;
+            case 'F':
+                color = Color.AQUA;
+                break;
+            default:
+                color = Color.BLACK;
         }
         towerBase.setFill(color);
-        Text towerText = new Text(t.getCharRepr()+"");
+        Text towerText = new Text(t.getCharRepr() + "");
         towerImage.getChildren().addAll(towerBase, towerText);
         return towerImage;
     }

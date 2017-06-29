@@ -34,7 +34,7 @@ public class BasicTower implements Tower {
      */
     private static final int COST = 100;
     private static final int[] UPGRADE_COST = new int[]{100, 200, 300, 400, 500};
-    
+
     private int buildCost;
 
     /**
@@ -43,9 +43,9 @@ public class BasicTower implements Tower {
      * @param tile The tile the tower is located in.
      * @param power The power of the tower.
      * @param speed The firingspeed of the tower.
-     * @param range
+     * @param range The range of the tower.
      * @param upgradeCost Array of costs to upgrade the tower.
-     * @param buildCost
+     * @param buildCost The cost to build the tower.
      */
     public BasicTower(Tile tile, int power, int speed, double range, int[] upgradeCost, int buildCost) {
         this.power = power;
@@ -66,7 +66,7 @@ public class BasicTower implements Tower {
      * @param tile The tile the tower is located in.
      * @param power The power of the tower.
      * @param speed The firingspeed of the tower.
-     * @param range
+     * @param range The range of the tower.
      * @param upgradeCost Array of costs to upgrade the tower.
      */
     public BasicTower(Tile tile, int power, int speed, double range, int[] upgradeCost) {
@@ -82,6 +82,9 @@ public class BasicTower implements Tower {
         this(tile, 1, 1000, 3.0, UPGRADE_COST);
     }
 
+    /**
+     * Create a basic tower.
+     */
     public BasicTower() {
         this(null);
     }
@@ -170,7 +173,7 @@ public class BasicTower implements Tower {
         if (closest == null) {
             return null;
         }
-        
+
         if (Location.getDistance(this.getTile().getLocation(),
                 closest.getTile().getLocation()) <= this.range) {
             return closest;

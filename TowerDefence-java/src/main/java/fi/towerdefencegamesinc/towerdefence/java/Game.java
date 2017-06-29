@@ -17,6 +17,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
+ * This is the main class that generates the game environment.
  *
  * @author vrsaari
  */
@@ -25,7 +26,7 @@ public class Game {
     private final GameMap map;
     private final Player player;
     private int score;
-    
+
     private int[] wavesOfAttackers;
     private int nextWave;
     private int spawnedCurrentWave;
@@ -33,6 +34,14 @@ public class Game {
     private boolean gameOver;
     private boolean gameWon;
 
+    /**
+     * Creates a Game object.
+     *
+     * @param mapFile Name of the map file to be used.
+     * @param playerName Name of the player.
+     * @param difficulty Difficulty for the game.
+     * @param external If the map to be used is an external map.
+     */
     public Game(String mapFile, String playerName, Difficulty difficulty, boolean external) {
         int startCurrency = 1000 - difficulty.getDifficulty() * 250;
         this.map = GameMap.loadMapFromFile(mapFile, external);
@@ -40,29 +49,55 @@ public class Game {
         this.score = 0;
         this.nextWave = 0;
         this.spawnedCurrentWave = 0;
-        this.wavesOfAttackers = new int[]{5,10,15,20,25};
+        this.wavesOfAttackers = new int[]{5, 10, 15, 20, 25};
     }
-    
+
+    /**
+     * Creates a Game object.
+     *
+     * @param mapFile Name of the map file to be used.
+     * @param playerName Name of the player.
+     * @param difficulty Difficulty for the game.
+     */
     public Game(String mapFile, String playerName, Difficulty difficulty) {
         this(mapFile, playerName, difficulty, false);
     }
 
+    /**
+     * Getter for score.
+     * @return Returns current score for the game.
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     * Setter for score.
+     * @param score Integer to be set as score.
+     */
     public void setScore(int score) {
         this.score = score;
     }
 
+    /**
+     * Getter for player.
+     * @return Returns the player playing the game.
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * Getter for map.
+     * @return Returns current map.
+     */
     public GameMap getMap() {
         return map;
     }
 
+    /**
+     * This is a game updating method. It makes the game tick forwards one tick.
+     */
     public void update() {
         if (player.gameOver()) {
             this.gameOver = true;
@@ -90,7 +125,7 @@ public class Game {
             if (target != null) {
                 System.out.println("shooting at target");
                 tower.shoot(target);
-                if(target.isDead()) {
+                if (target.isDead()) {
                     this.player.loot(target);
                 }
             } else {
@@ -98,14 +133,18 @@ public class Game {
             }
         });
         if (new Random().nextInt(3) == 0) {
-            if(!this.spawnAttacker() && this.getMap().getAllAttackers().isEmpty()) {
+            if (!this.spawnAttacker() && this.getMap().getAllAttackers().isEmpty()) {
                 this.currentWaveFinished = true;
             }
         }
     }
 
+    /**
+     * Attempts to spawn an attacker at a random spawn.
+     * @return True, if an attacker was spawned.
+     */
     public boolean spawnAttacker() {
-        if(this.spawnedCurrentWave >= this.wavesOfAttackers[this.nextWave-1]) {
+        if (this.spawnedCurrentWave >= this.wavesOfAttackers[this.nextWave - 1]) {
             return false;
         }
         this.spawnedCurrentWave++;
@@ -116,24 +155,43 @@ public class Game {
         return true;
     }
 
+    /**
+     * Getter for nextWave.
+     * @return Returns number of next wave.
+     */
     public int getNextWave() {
         return this.nextWave;
     }
-    
+
+    /**
+     * Begins a new wave.
+     */
     public void startNextWave() {
         this.nextWave++;
         this.currentWaveFinished = false;
         this.spawnedCurrentWave = 0;
     }
 
+    /**
+     * Is current wave finished?
+     * @return True if current wave is finished.
+     */
     public boolean currentWaveFinished() {
         return this.currentWaveFinished;
     }
-    
+
+    /**
+     * Is the game over?
+     * @return True if game is over.
+     */
     public boolean gameOver() {
         return this.gameOver;
     }
-    
+
+    /**
+     * Has the player won?
+     * @return True if player has beat the game.
+     */
     public boolean gameWon() {
         return this.gameWon;
     }

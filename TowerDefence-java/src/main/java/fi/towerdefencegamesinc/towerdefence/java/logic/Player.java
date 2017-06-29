@@ -34,6 +34,12 @@ public class Player {
         this.baseHealth = health;
     }
 
+    /**
+     * Create a player object.
+     *
+     * @param name The name of the player.
+     * @param currency Amount of game currency.
+     */
     public Player(String name, int currency) {
         this(name, currency, 100);
     }
@@ -54,6 +60,11 @@ public class Player {
         this.currency = currency;
     }
 
+    /**
+     * Make player take damage.
+     *
+     * @param damageToBase Damage to be taken.
+     */
     public void takeDamage(int damageToBase) {
         this.health -= damageToBase;
         System.out.println("Player took " + damageToBase + " damage.");
@@ -77,10 +88,21 @@ public class Player {
         this.health = health;
     }
 
+    /**
+     * Is the game over?
+     *
+     * @return True if player has lost.
+     */
     public boolean gameOver() {
         return this.health <= 0;
     }
 
+    /**
+     * Attempt to buy a tower.
+     *
+     * @param tower The tower to be bought.
+     * @return True if the tower was bought.
+     */
     public boolean buy(Tower tower) {
         int cost = tower.getBuildCost();
         if (this.currency - cost >= 0) {
@@ -92,6 +114,12 @@ public class Player {
         return false;
     }
 
+    /**
+     * Attempt to sell a tower.
+     *
+     * @param tower The tower to be sold.
+     * @return True if the tower was sold.
+     */
     public boolean sell(Tower tower) {
         if (tower.getTile().removeTower(tower)) {
             int worth = tower.getWorth();
@@ -101,6 +129,12 @@ public class Player {
         return false;
     }
 
+    /**
+     * Attempt to upgrade a tower.
+     *
+     * @param tower The tower to be upgraded.
+     * @return True if the tower was upgraded.
+     */
     public boolean upgradeTower(Tower tower) {
         if (this.currency - tower.getUpgradeCost() < 0) {
             return false;
@@ -110,6 +144,10 @@ public class Player {
         return true;
     }
 
+    /**
+     * Attempt to loot an attacker.
+     * @param target The attacker to be looted.
+     */
     public void loot(Attacker target) {
         this.currency += target.loot();
     }

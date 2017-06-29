@@ -44,6 +44,7 @@ public class Tile {
     }
 
     /**
+     * Creates a tile object.
      *
      * @param x x-coordinate for tile.
      * @param y y-coordinate for tile.
@@ -120,7 +121,13 @@ public class Tile {
             return false;
         }
     }
-    
+
+    /**
+     * Attempt to remove a tower from the tile.
+     *
+     * @param tower The tower to be removed.
+     * @return True if the tower was removed.
+     */
     public boolean removeTower(Tower tower) {
         if (this.tower.equals(tower)) {
             this.tower = null;
@@ -130,10 +137,22 @@ public class Tile {
         }
     }
 
+    /**
+     * Attempt to add an attacker.
+     *
+     * @param attacker The attacker to be added.
+     * @return True if the attacker was added.
+     */
     public boolean addAttacker(Attacker attacker) {
         return this.attackers.add(attacker);
     }
 
+    /**
+     * Attempt to remove an attacker.
+     *
+     * @param attacker The attacker to be removed.
+     * @return True if the attacker was removed.
+     */
     public boolean removeAttacker(Attacker attacker) {
         return this.attackers.remove(attacker);
     }
@@ -165,16 +184,21 @@ public class Tile {
         return sb.toString();
     }
 
-//    @Override
-//    public boolean equals(Object obj) {
-//        Tile other = (Tile) obj;
-//        return type == other.getType() && tower.equals(other.getTower()) 
-//                && buildable == other.isBuildable();
-//    }
+    /**
+     * Check if the tile is a spawnlocation.
+     *
+     * @return True if the tile is marked as spawn.
+     */
     public boolean isSpawn() {
         return this.type == Type.Spawn;
     }
 
+    /**
+     * Find the next road tile to move to.
+     *
+     * @param previous The tile visited before this one.
+     * @return The next tile to move to.
+     */
     public Tile nextRoad(Tile previous) {
         Tile next = null;
         List<Tile> options = new ArrayList();
@@ -203,7 +227,7 @@ public class Tile {
 
             if (!next.canMoveTo()) {
                 next = null;
-            } else if(next == previous) {
+            } else if (next == previous) {
                 next = null;
             } else {
                 break;
@@ -216,6 +240,11 @@ public class Tile {
         return this.type == Type.Road || this.type == Type.Spawn || this.type == Type.Base;
     }
 
+    /**
+     * Is this a base-tile?
+     *
+     * @return True if this is a base-tile.
+     */
     public boolean isBase() {
         return this.type == Type.Base;
     }

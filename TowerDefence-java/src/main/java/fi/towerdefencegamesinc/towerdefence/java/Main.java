@@ -13,11 +13,15 @@ import fi.towerdefencegamesinc.towerdefence.java.ui.TextUI;
 import java.util.Scanner;
 
 /**
- *
+ * Main class used to run the program.
  * @author vrsaari
  */
 public class Main {
 
+    /**
+     * Main method for the main class.
+     * @param args These make no difference.
+     */
     public static void main(String[] args) {
         Tower t1 = new BasicTower();
         Tower t2 = new FreezeTower();
@@ -27,9 +31,8 @@ public class Main {
 
 //        TextUI ui = new TextUI(new Scanner(System.in));
         GraphicalUI ui = new GraphicalUI();
-        
+
         ui.run();
 
-        
     }
 }

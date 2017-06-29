@@ -14,7 +14,7 @@ import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
  * @author vrsaari
  */
 public class FlyingAttacker extends BasicAttacker {
-    
+
     private static final int DEFAULT_LOOT = 200;
     private static final int DEFAULT_HEALTH = 100;
 

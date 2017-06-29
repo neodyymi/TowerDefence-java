@@ -30,7 +30,7 @@ public enum Type {
         representation = t;
         background = bg;
     }
-    
+
     public Background getBackground() {
         return this.background;
     }

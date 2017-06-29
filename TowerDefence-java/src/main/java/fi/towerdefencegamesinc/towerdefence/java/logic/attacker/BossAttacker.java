@@ -12,11 +12,11 @@ import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
  *
  * @author vrsaari
  */
-public class BossAttacker extends BasicAttacker {    
-    
+public class BossAttacker extends BasicAttacker {
+
     private static final int DEFAULT_LOOT = 1000;
     private static final int DEFAULT_HEALTH = 1000;
-    
+
     /**
      * Creates a boss attacker.
      *

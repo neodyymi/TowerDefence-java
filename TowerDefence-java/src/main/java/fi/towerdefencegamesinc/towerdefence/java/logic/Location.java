@@ -6,7 +6,7 @@
 package fi.towerdefencegamesinc.towerdefence.java.logic;
 
 /**
- *
+ * Class for handling locations or coordinates.
  * @author vrsaari
  */
 public class Location {
@@ -14,13 +14,18 @@ public class Location {
     private final int x;
     private final int y;
 
+    /**
+     * Creates a new location.
+     * @param x x-coordinate for location.
+     * @param y y-coordinate for location.
+     */
     public Location(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
     /**
-     *
+     * Calculate distance between two locations.
      * @param x1 x-coordinate for first tile.
      * @param y1 y-coordinate for first tile.
      * @param x2 x-coordinate for second tile.
@@ -35,7 +40,7 @@ public class Location {
     }
 
     /**
-     *
+     * Calculate distance between two locations.
      * @param location First location.
      * @param other Other location.
      * @return distance between locations.

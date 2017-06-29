@@ -39,6 +39,7 @@ public interface Tower {
     int getUpgradeCost();
 
     /**
+     * Getter for level.
      *
      * @return The current level of the tower.
      */
@@ -52,6 +53,7 @@ public interface Tower {
     boolean readyToShoot();
 
     /**
+     * Getter for single character representation of the tower.
      *
      * @return Single character representation for the tower.
      */
@@ -63,36 +65,53 @@ public interface Tower {
      * @return Time of last shot fired.
      */
     public long getLastShot();
-    
+
     /**
-     * Get target for tower. This will return the previous target, 
-     * if it is still in range. Otherwise nearest new target in range is returned.
-     * In case no target is in range, null is returned.
+     * Get target for tower. This will return the previous target, if it is
+     * still in range. Otherwise nearest new target in range is returned. In
+     * case no target is in range, null is returned.
+     *
      * @param attackers List of all attackers in game.
      * @return Target for tower or null if none in range.
      */
     public Attacker getTarget(List<Attacker> attackers);
-    
+
     /**
+     * Getter for the tile the tower is in.
      *
      * @return Tile the tower is located in.
      */
     public Tile getTile();
 
     /**
+     * Getter for range.
      *
      * @return Attack range of the tower.
      */
     public double getRange();
 
+    /**
+     * Setter for the tile the tower is located in.
+     *
+     * @param tile The new tile the tower is located in.
+     */
     public void setTile(Tile tile);
 
+    /**
+     * Getter for total worth of the tower.
+     *
+     * @return Value of the tower.
+     */
     public int getWorth();
 
+    /**
+     * Getter for build cost.
+     *
+     * @return The build cost for the tower.
+     */
     public int getBuildCost();
 
     @Override
     public String toString();
 
-    
 }
