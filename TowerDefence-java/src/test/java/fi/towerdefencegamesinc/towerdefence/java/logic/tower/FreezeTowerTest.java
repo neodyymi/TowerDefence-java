@@ -21,6 +21,7 @@ import static org.junit.Assert.*;
  */
 public class FreezeTowerTest {
     private Tower freezeTower;
+    private Tower freezeTowerEmpty;
     private Tile tile;
     private BasicAttacker attacker;
     
@@ -40,6 +41,8 @@ public class FreezeTowerTest {
         this.tile = new Tile(0, 0, Type.Spawn, false);
         this.attacker = new BasicAttacker(this.tile, 1, 1);
         this.freezeTower = new FreezeTower(this.tile);
+        this.freezeTowerEmpty = new FreezeTower();
+        this.freezeTowerEmpty.setTile(null);
     }
     
     @After

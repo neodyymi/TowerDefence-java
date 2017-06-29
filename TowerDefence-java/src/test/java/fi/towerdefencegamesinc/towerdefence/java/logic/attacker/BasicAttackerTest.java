@@ -5,9 +5,12 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
 
+import fi.towerdefencegamesinc.towerdefence.java.logic.GameMap;
+import fi.towerdefencegamesinc.towerdefence.java.logic.Location;
 import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
 import fi.towerdefencegamesinc.towerdefence.java.logic.Type;
 import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.BasicModifier;
+import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.PoisonModifier;
 import fi.towerdefencegamesinc.towerdefence.java.logic.modifier.SlowModifier;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -24,6 +27,7 @@ public class BasicAttackerTest {
     
     private Attacker basicAttacker;
     private Tile tile;
+    private GameMap testMap;
     
     public BasicAttackerTest() {
     }
@@ -38,8 +42,13 @@ public class BasicAttackerTest {
     
     @Before
     public void setUp() {
-        this.tile = new Tile(0, 0, Type.Spawn, false);
-        this.basicAttacker = new BasicAttacker(this.tile, 10, 1000);
+        testMap = GameMap.loadMapFromFile("testMap1", false);
+        this.tile = testMap.getRandomSpawn();
+//        this.tile = new Tile(0, 0, Type.Spawn, false);
+        this.basicAttacker = new BasicAttacker(this.tile, 1, 1000);
+        
+        
+        
     }
     
     @After
@@ -51,7 +60,13 @@ public class BasicAttackerTest {
      */
     @Test
     public void testMove() {
-        assertTrue(true);
+        Location start = this.basicAttacker.getTile().getLocation();
+        String expStart = "(0, 1)";
+        this.basicAttacker.move();
+        Location end = this.basicAttacker.getTile().getLocation();
+        String expEnd = "(1, 1)";
+        assertEquals(expStart, start.toString());
+        assertEquals(expEnd, end.toString());
     }
 
     /**
@@ -93,7 +108,32 @@ public class BasicAttackerTest {
      */
     @Test
     public void testGetSpeed() {
-        assertEquals(10, this.basicAttacker.getSpeed());
+        assertTrue(this.basicAttacker.getSpeed() == 1);
+    }
+    
+    @Test
+    public void testGetHealthPct() {
+        assertTrue(this.basicAttacker.getHealthPct() == 1);
+    }
+    
+    @Test
+    public void testLoot() {
+        assertEquals(0, this.basicAttacker.loot());
+    }
+    
+    @Test
+    public void testTakeDamage() {
+        this.basicAttacker.takeDamage(99);
+        assertEquals(1, this.basicAttacker.getHealth());
+        this.basicAttacker.takeDamage(1);
+        assertEquals(100, this.basicAttacker.loot());
+    }
+    
+    @Test
+    public void testToString() {
+        this.basicAttacker.addModifier(new PoisonModifier(100_000_000L, 1));
+        String expResult = "Basic speed: 1.0, damage: 1000.0, health: 100/100, modifiers: 1666:40 Poison(1 hp/sec)";
+        assertEquals(expResult, this.basicAttacker.toString());
     }
     
 }

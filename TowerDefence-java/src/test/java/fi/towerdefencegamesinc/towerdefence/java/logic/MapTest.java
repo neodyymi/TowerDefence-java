@@ -5,9 +5,14 @@
  */
 package fi.towerdefencegamesinc.towerdefence.java.logic;
 
+import fi.towerdefencegamesinc.towerdefence.java.logic.attacker.Attacker;
+import fi.towerdefencegamesinc.towerdefence.java.logic.attacker.BasicAttacker;
+import fi.towerdefencegamesinc.towerdefence.java.logic.tower.BasicTower;
+import fi.towerdefencegamesinc.towerdefence.java.logic.tower.Tower;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
@@ -89,7 +94,6 @@ public class MapTest {
         });
         sb.append("\n");
 
-        
         GameMap testMap = GameMap.loadMapFromFile("testMap", true);
         assertEquals(testMap.toString(), sb.toString());
     }
@@ -99,8 +103,7 @@ public class MapTest {
         char[][] tmpTiles = {
             {'#', '#', '#'},
             {'X', ' ', '$'},
-            {'@', '@', '@'},
-        };
+            {'@', '@', '@'},};
 
         File tmpF;
         StringBuilder sb = new StringBuilder();
@@ -110,9 +113,53 @@ public class MapTest {
         });
         sb.append("\n");
 
-        
         GameMap testMap = GameMap.loadMapFromFile("testMap1", false);
         assertEquals(testMap.toString(), sb.toString());
     }
 
+    @Test
+    public void testGetAllAttackersAndTowers() {
+        GameMap testMap = GameMap.loadMapFromFile("testMap1", false);
+        Tower tower = new BasicTower(testMap.getTile(2, 2));
+        testMap.getTile(2, 2).addTower(tower);
+        Tile spawn = testMap.getRandomSpawn();
+        Attacker attacker = new BasicAttacker(spawn);
+        spawn.addAttacker(attacker);
+        assertEquals("Basic speed: 0.5, damage: 1.0, health: 100/100, modifiers: none", testMap.getAllAttackers().get(0).toString());
+        assertEquals("Basic Tower\n"
+                + "Level: 0\n"
+                + "Damage: 5.0\n"
+                + "Range: 3.0\n"
+                + "Speed: 1000.0", testMap.getAllTowers().get(0).toString());
+        assertEquals(1, testMap.getAllAttackers().size());
+        assertEquals(1, testMap.getAllTowers().size());
+    }
+
+    @Test
+    public void testToStringExtended() {
+        GameMap testMap = GameMap.loadMapFromFile("testMap1", false);
+        Tower tower = new BasicTower(testMap.getTile(2, 2));
+        testMap.getTile(2, 2).addTower(tower);
+        Tile spawn = testMap.getRandomSpawn();
+        Attacker attacker = new BasicAttacker(spawn);
+        spawn.addAttacker(attacker);
+        assertEquals("###\n"
+                + "1 $\n"
+                + "@@B\n"
+                + "\n"
+                + "X (0, 1) Unbuildable\n"
+                + "\n"
+                + "Basic speed: 0.5, damage: 1.0, health: 100/100, modifiers: none\n", testMap.toString());
+    }
+    
+    @Test
+    public void testExternalMapFiles() {
+        List<String> files = null;
+        try {
+            files = GameMap.externalMapFiles();
+        } catch (IOException ex) {
+            Logger.getLogger(MapTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        assertEquals("[Ext: samplemap1.map]", files.toString());
+    }
 }

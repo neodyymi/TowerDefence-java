@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fi.towerdefencegamesinc.towerdefence.java.logic.attacker;
+package fi.towerdefencegamesinc.towerdefence.java.logic.modifier;
 
-import fi.towerdefencegamesinc.towerdefence.java.logic.Tile;
-import fi.towerdefencegamesinc.towerdefence.java.logic.Type;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,9 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author vrsaari
  */
-public class BossAttackerTest {
+public class PoisonModifierTest {
     
-    public BossAttackerTest() {
+    public PoisonModifierTest() {
     }
     
     @BeforeClass
@@ -39,14 +37,16 @@ public class BossAttackerTest {
     public void tearDown() {
     }
 
+    /**
+     * Test of toString method, of class PoisonModifier.
+     */
     @Test
-    public void testCreateBossAttacker() {
-        
-        Tile tile = new Tile(0, 0, Type.Spawn, false);
-        Attacker bossAttacker = new BossAttacker(tile, 1, 1);
-        assertTrue(bossAttacker.getSpeed() == 1);
-        assertEquals(false, bossAttacker.canFly());
-        assertEquals(1, bossAttacker.attack());
+    public void testToString() {
+        System.out.println("toString");
+        PoisonModifier instance = new PoisonModifier(1_000_000L, "TestName", 1);
+        String expResult = "16:40 TestName(1 hp/sec)";
+        String result = instance.toString();
+        assertEquals(expResult, result);
     }
     
 }
